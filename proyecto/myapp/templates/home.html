@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de administración</title>
+    {% load static %}
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="top">
+            <div class="logo">
+                <i class="bx bxs-book-content"></i>
+                <span>Menú</span>
+            </div>
+            <i class="bx bx-menu" id="btn" ></i>
+        </div>
+        <div class="user">
+            <img src="{% static 'images/foto_perfil_image.png' %}" alt="me" class="user_img">
+            <div>
+                <p class="bold">Banja el mejor</p>
+                <p>Admin</p>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="#">
+                    <i class="bx bxs-book-content"></i>
+                    <span class="nav-item">Agenda</span>
+                </a>
+                <span class="tooltip">Agenda</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-line-chart"></i>
+                    <span class="nav-item">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li> 
+            <li>
+                <a href="#">
+                    <i class="bx bx-group"></i>
+                    <span class="nav-item">Personal</span>
+                </a>
+                <span class="tooltip">Personal</span>
+            </li> 
+            <li>
+                <a href="#">
+                    <i class="bx bxs-door-open"></i>
+                    <span class="nav-item">Boxes</span>
+                </a>
+                <span class="tooltip">Boxes</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-injection"></i>
+                    <span class="nav-item">Implementos</span>
+                </a>
+                <span class="tooltip">Implementos</span>
+            </li> 
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <h1>Menú</h1>
+            <h1>hola</h1>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    let btn =  document.querySelector('#btn')
+    let sidebar = document.querySelector('.sidebar')
+    btn.onclick = function (){
+        sidebar.classList.toggle('active');
+    };
+</script>
+
+</html>

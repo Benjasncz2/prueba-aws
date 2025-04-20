@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    {% load static %}
+
+    <style>
+        /* Estilo general de la página */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Contenedor principal */
+        .container {
+            display: flex;
+            width: 100%;
+        }
+
+        /* Estilo para la imagen */
+        .left-side {
+            width: 50%;
+            height: 100vh;  /* Asegura que la imagen ocupe toda la altura */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .left-side img {
+            width: 100%;  /* Hace que la imagen ocupe todo el espacio disponible */
+            height: 100%;  /* Asegura que la imagen ocupe toda la altura */
+            object-fit: cover;  /* Mantiene la proporción y cubre el área */
+        }
+
+        /* Estilo para el formulario de login */
+        .right-side {
+            width: 50%;
+            height: 100vh;  /* Asegura que el formulario ocupe toda la altura */
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+        }
+
+        /* Estilo del formulario */
+        .login-form {
+            width: 100%;
+            max-width: 400px; /* Puedes ajustar este valor para cambiar el ancho */
+            background-color: white;
+            padding: 50px; /* Cambié el padding para que se vea más espacioso */
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Estilos para las etiquetas */
+        .login-form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Estilos para los campos de entrada */
+        .login-form input {
+            width: 100%;
+            padding: 12px;
+            margin: 20px 0;  /* Aumenté el margen para más espacio entre los campos */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        /* Estilo del botón */
+        .login-form button {
+            width: 100%;
+            padding: 12px;
+            background-color: black;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .login-form button:hover {
+            background-color: #333;  /* Sombra de color más oscuro al pasar el cursor */
+        }
+
+        /* Estilo para el enlace de "Olvidó su contraseña?" */
+        .login-form .forgot-password {
+            margin-top: 15px;
+            text-align: left;
+        }
+
+        .login-form .forgot-password a {
+            text-decoration: underline;  /* Subraya el texto */
+            color: #007BFF;  /* Color del enlace */
+        }
+
+        .login-form .forgot-password a:hover {
+            color: #0056b3;  /* Cambia el color cuando el enlace está en hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Imagen a la izquierda -->
+        <div class="left-side">
+            <img src="{% static 'images/login_image.png' %}" alt="Logo">
+        </div>
+
+        <!-- Formulario de login a la derecha -->
+        <div class="right-side">
+            <form class="login-form" action="#" method="post">
+                <h2>Iniciar sesión</h2>
+
+                <!-- Etiqueta y campo de usuario -->
+                <label for="username">Usuario</label>
+                <input type="text" id="username" name="username" placeholder="Usuario" required>
+
+                <!-- Etiqueta y campo de contraseña -->
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+
+                <!-- Botón -->
+                <button type="submit">Ingresar</button>
+
+                <!-- Enlace para olvidar la contraseña -->
+                <div class="forgot-password">
+                    <a href="#">¿Olvidó su contraseña?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

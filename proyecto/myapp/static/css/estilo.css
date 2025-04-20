@@ -1,0 +1,16 @@
+h1{
+    color: chartreuse;
+}
+
+#mitabla{
+    border: red 5px solid;
+}
+
+.miclase1{
+    color: crimson;
+}
+
+.miclase2{
+    font-size: 20px;
+    background-color: darkgreen;
+}

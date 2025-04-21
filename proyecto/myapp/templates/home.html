@@ -8,7 +8,8 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
 </head>
-<body>
+
+<body>    
     <div class="sidebar">
         <div class="top">
             <div class="logo">
@@ -63,6 +64,15 @@
         </ul>
     </div>
 
+    <header class="main-header">
+        <div class="header-content">
+            <div class="logo-box">
+                <img src="{% static 'images/login_image.png' %}" alt="Logo Hospital" class="hospital-logo">
+            </div>
+            <button class="inicio-btn">Inicio</button>
+        </div>
+    </header>
+
     <div class="main-content">
         {% for pasillo in pasillos %}
             <div class="pasillo">
@@ -85,8 +95,6 @@
                 </div>
             </div>
         {% endfor %}
-    </div>
-    
     </div>
 </body>
 

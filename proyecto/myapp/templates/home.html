@@ -64,46 +64,29 @@
     </div>
 
     <div class="main-content">
-        <div class="pasillo">
-            <div class="pasillo-header" onclick="toggleBoxes(this)">Pasillo 1 ▼</div>
-            <div class="boxes">
-              <div class="box">Box 1<div class="status green"></div></div>
-              <div class="box">Box 2<div class="status red"></div></div>
-              <div class="box">Box 3<div class="status red"></div></div>
-              <!-- ... -->
+        {% for pasillo in pasillos %}
+            <div class="pasillo">
+                <div class="pasillo-header" onclick="toggleBoxes(this)">
+                    {{ pasillo.nombrepasillo }} ▼
+                </div>
+                <div class="boxes">
+                    {% for box in pasillo.box_set.all %}
+                        <div class="box">
+                            Box {{ box.numerobox }}
+                            {% if box.idestadobox.descripcionestadobox == "Disponible" %}
+                                <div class="status green"></div>
+                            {% else %}
+                                <div class="status red"></div>
+                            {% endif %}
+                        </div>
+                    {% empty %}
+                        <p>No hay boxes en este pasillo.</p>
+                    {% endfor %}
+                </div>
             </div>
-          </div>
-          
-          <div class="pasillo">
-            <div class="pasillo-header" onclick="toggleBoxes(this)">Pasillo 2 ▼</div>
-            <div class="boxes">
-              <div class="box">Box 10<div class="status green"></div></div>
-              <!-- ... -->
-            </div>
-          </div>
-          
-          <div class="pasillo">
-            <div class="pasillo-header" onclick="toggleBoxes(this)">Pasillo 3 ▼</div>
-            <div class="boxes">
-              <div class="box">
-                <strong>Box 20</strong>
-                <div class="status green"></div>
-              </div>
-              <!-- Más boxes -->
-            </div>
-          </div>
-         
-        <div style="background: #f0f0f0; padding: 10px; margin-bottom: 20px;">
-            {% for id_pasillo, data in pasillos.items %}
-            <h2>{{ data.nombre }}</h2>
-            <ul>
-              {% for box in data.boxes %}
-                <li>Box {{ box.numero }} - Estado: {{ box.estado }}</li>
-              {% endfor %}
-            </ul>
-          {% endfor %}          
-        </div>
-
+        {% endfor %}
+    </div>
+    
     </div>
 </body>
 

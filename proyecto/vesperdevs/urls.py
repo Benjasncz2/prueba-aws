@@ -21,5 +21,5 @@ from myapp import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.login),
-    path("home/", views.home)
+    path("home/", views.disponibilidad_boxes)
 ]

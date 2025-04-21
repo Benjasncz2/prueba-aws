@@ -66,14 +66,17 @@
 
     <header class="main-header">
         <div class="header-content">
-            <div class="logo-box">
-                <img src="{% static 'images/login_image.png' %}" alt="Logo Hospital" class="hospital-logo">
-            </div>
             <button class="inicio-btn">Inicio</button>
+            <div class="logo-box">
+                <img src="{% static 'images/logo_hospital.png' %}" alt="Logo Hospital" class="hospital-logo">
+            </div>
         </div>
     </header>
-
+    
     <div class="main-content">
+        <div class="titulo-content">
+            <h2>BOXES</h2>
+        </div>
         {% for pasillo in pasillos %}
             <div class="pasillo">
                 <div class="pasillo-header" onclick="toggleBoxes(this)">
@@ -96,6 +99,13 @@
             </div>
         {% endfor %}
     </div>
+    <footer>
+        <div class="main_footer">
+            <div class="footer_content">
+                <h2>VesperDevs 2025</h2>
+            </div>
+        </div>
+    </footer>
 </body>
 
 <script>

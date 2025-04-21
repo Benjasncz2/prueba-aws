@@ -76,6 +76,15 @@
     <div class="main-content">
         <div class="titulo-content">
             <h2>BOXES</h2>
+            <div class="filtrar-wrapper">
+                <button class="filtrar-btn" onclick="toggleFiltro()">Filtrar</button>
+                <div class="dropdown-filtro hidden">
+                    <div onclick="filtrarBoxes('Disponible')">Disponibles</div>
+                    <div onclick="filtrarBoxes('Ocupado')">No Disponibles</div>
+                    <div onclick="filtrarBoxes('En mantención')">En Mantención</div>
+                    <div onclick="filtrarBoxes('Todos')">Mostrar Todos</div>
+                </div>
+            </div>
         </div>
         {% for pasillo in pasillos %}
             <div class="pasillo">
@@ -88,8 +97,12 @@
                             Box {{ box.numerobox }}
                             {% if box.idestadobox.descripcionestadobox == "Disponible" %}
                                 <div class="status green"></div>
-                            {% else %}
+                            {% elif box.idestadobox.descripcionestadobox == "No disponible" %}
                                 <div class="status red"></div>
+                            {% elif box.idestadobox.descripcionestadobox == "En mantención" %}
+                                <div class="status yellow"></div>
+                            {% else %}
+                                <div class="status gray"></div>  {# Un fallback si llega algo inesperado #}
                             {% endif %}
                         </div>
                     {% empty %}
@@ -122,6 +135,30 @@
       ? header.textContent.replace('▲', '▼')
       : header.textContent.replace('▼', '▲');
   }
+
+
+  function toggleFiltro() {
+        const dropdown = document.querySelector('.dropdown-filtro');
+        dropdown.classList.toggle('hidden');
+    }
+
+    function filtrarBoxes(filtro) {
+        const boxes = document.querySelectorAll('.box');
+        boxes.forEach(box => {
+            const estado = box.querySelector('.status').classList;
+            const visible = (
+                (filtro === 'Disponible' && estado.contains('green')) ||
+                (filtro === 'Ocupado' && estado.contains('red')) ||
+                (filtro === 'En mantención' && estado.contains('yellow')) ||
+                (filtro === 'Todos')
+            );
+
+            box.style.display = visible ? 'block' : 'none';
+        });
+
+        // Ocultar el menú después de seleccionar
+        toggleFiltro();
+    }
 </script>
 
 </html>

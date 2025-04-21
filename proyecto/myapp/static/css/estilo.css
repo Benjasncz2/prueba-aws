@@ -197,7 +197,7 @@
 
 .pasillo {
     margin-bottom: 1rem;
-    background: #d2e4ed;
+    background: #FFD8E4;
     padding: 1rem;
     border-radius: 10px;
   }
@@ -243,6 +243,7 @@
 
   .green { background: green; }
   .red { background: red; }
+  .yellow { background: yellow; }
 
   .hidden { display: none; }
 
@@ -262,17 +263,15 @@
     z-index: 999;
 }
 
-/* Si la sidebar está activa (expandida) */
 .sidebar.active ~ .main-header {
     left: 250px;
     width: calc(100% - 250px);
 }
 
-/* Contenedor dentro del header */
 .header-content {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
 }
 
 .hospital-logo {
@@ -306,5 +305,75 @@
     display: flex;
     align-items: center;     /* centra verticalmente */
     justify-content: center; /* centra horizontalmente */
-    height: 100%;            /* asegúrate que tenga altura para que el centrado funcione */
+    height: 100%;            
 }
+
+/*TODO LO DEL TITULO Y EL BOTON DE FILTRAR */
+
+.titulo-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0;
+    padding: 0 1rem;
+}
+
+.titulo-content h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #21005D;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.filtrar-btn {
+    padding: 1rem 1.5rem;
+    background-color: #21005D;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.3s ease ;
+}
+
+.filtrar-btn:hover {
+    background-color: #3b218d;
+}
+
+.filtrar-wrapper {
+    position: relative;
+}
+
+.dropdown-filtro {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 1000;
+    width: 180px;
+}
+
+.dropdown-filtro div {
+    padding: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    transition: background 0.2s ease;
+}
+
+.dropdown-filtro div:last-child {
+    border-bottom: none;
+}
+
+.dropdown-filtro div:hover {
+    background-color: #b4f1e9;
+}
+
+.hidden {
+    display: none;
+}
+

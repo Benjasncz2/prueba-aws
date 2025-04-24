@@ -471,3 +471,33 @@
 .color-circulo.red { background-color: #05b5af; }
 .color-circulo.yellow { background-color: #ffc107b7; }
 
+
+/*card pro*/
+.card-disponibles {
+    background-color: #f0f4f8;
+    border-left: 4px solid #05b5af;
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: inline-block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #000000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 50px; /* similar a botón */
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+
+.card-titulo {
+    font-size: 0.85rem;
+    color: #333;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.card-numero {
+    font-size: 1.5rem;
+    color: #05b5af;
+    font-weight: bold;
+}

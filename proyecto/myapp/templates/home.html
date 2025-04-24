@@ -77,7 +77,11 @@
         <div class="titulo-content">
             <h2>BOXES</h2>
             
-            <h2>Total Boxes Disponibles: {{ total_disponibles }}</h2>
+            <div class="card-disponibles">
+                Total Boxes Disponibles: {{ total_disponibles }}
+            </div>
+            
+
             <div class="leyenda-boxes">
                 <div><span class="color-circulo gray"></span> Disponible</div>
                 <div><span class="color-circulo red"></span> En uso</div>
@@ -97,7 +101,7 @@
         {% for item in pasillos_data %}
         <div class="pasillo">
             <div class="pasillo-header" onclick="toggleBoxes(this)">
-                {{ item.pasillo.nombrepasillo }} - Disponibles: {{ item.disponibles }} ▼
+                {{ item.pasillo.nombrepasillo }} -  Boxes Disponibles: {{ item.disponibles }} ▼
             </div>
             
             <div class="boxes">

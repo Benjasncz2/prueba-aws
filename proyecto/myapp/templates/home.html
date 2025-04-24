@@ -76,6 +76,7 @@
     <div class="main-content">
         <div class="titulo-content">
             <h2>BOXES</h2>
+            <h2>Total Boxes Disponibles: {{ total_disponibles }}</h2>
             <div class="leyenda-boxes">
                 <div><span class="color-circulo gray"></span> Disponible</div>
                 <div><span class="color-circulo red"></span> En uso</div>
@@ -92,28 +93,28 @@
             </div>
         </div>
         
-        {% for pasillo in pasillos %}
-            <div class="pasillo">
-                <div class="pasillo-header" onclick="toggleBoxes(this)">
-                    {{ pasillo.nombrepasillo }} ▼
-                </div>
-                
-                <div class="boxes">
-                    {% for box in pasillo.box_set.all %}
-                        <div class="box
-                        {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
-                        {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
-                        {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
-                        {% else %} purple
-                        {% endif %}">
-                            Box {{ box.numerobox }}
-                        </div>
-                    {% empty %}
-                        <p>No hay boxes en este pasillo.</p>
-                    {% endfor %}
-                </div>
+        {% for item in pasillos_data %}
+        <div class="pasillo">
+            <div class="pasillo-header" onclick="toggleBoxes(this)">
+                {{ item.pasillo.nombrepasillo }} - Disponibles: {{ item.disponibles }} ▼
             </div>
-        {% endfor %}
+            
+            <div class="boxes">
+                {% for box in item.boxes %}
+                    <div class="box
+                    {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
+                    {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
+                    {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
+                    {% else %} purple
+                    {% endif %}">
+                        Box {{ box.numerobox }}
+                    </div>
+                {% empty %}
+                    <p>No hay boxes en este pasillo.</p>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
     </div>
     <footer>
         <div class="main_footer">
@@ -131,16 +132,18 @@
                 </div>
                 <div class="footer-item">
                     <h2>CONTÁCTANOS</h2>
-                    <p>be.sanchezt@udd.cl</p>
-                    <p>b.pintof@udd.cl</p>
-                    <p>a.pintos@udd.cl</p>
+                    <p class="correos">
+                        be.sanchezt@udd.cl<br>
+                        a.pintos@udd.cl<br>
+                        b.pintof@udd.cl
+                    </p>
                 </div>
             </div>
             <div class="grupo2">
                 <small>&copy; 2025 <b>VesperDevs</b> - Todos los Derechos Reservados.</small>
             </div>
         </div>
-    </footer>
+    </footer>
 </body>
 
 <script>
@@ -179,7 +182,7 @@
         box.style.display = visible ? 'block' : 'none';
     });
 
-    toggleFiltro(); // Cierra el menú de filtro
+    toggleFiltro(); 
 }
 
 </script>

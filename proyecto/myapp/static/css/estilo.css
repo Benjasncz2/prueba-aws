@@ -197,10 +197,17 @@
 
 .pasillo {
     margin-bottom: 1rem;
-    background: #FFD8E4;
+    background: transparent;
     padding: 1rem;
     border-radius: 10px;
-  }
+    border: 2px solid rgba(0, 0, 0, 0.2); 
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.pasillo:hover {
+    background-color: #b4f1e9;
+    border-color: #000000;
+}
 
 
   .pasillo {
@@ -225,27 +232,38 @@
   }
 
   .box {
-    background: white;
     padding: 1rem;
     border-radius: 10px;
     min-width: 80px;
     text-align: center;
+    color: white;
+    font-weight: bold;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  }
+    transition: transform 0.2s ease;
+}
 
-  .box .status {
-    width: 10px;
-    height: 10px;
-    margin: 0 auto;
-    border-radius: 50%;
-    margin-top: 0.5rem;
-  }
+.box:hover {
+    transform: scale(1.05);
+}
 
-  .green { background: green; }
-  .red { background: red; }
-  .yellow { background: yellow; }
+/* Colores según estado */
+.gray {
+    background-color: #666666c7; 
+}
 
-  .hidden { display: none; }
+.red {
+    background-color: #db1866b7; 
+}
+
+.yellow {
+    background-color: #ffc107b7; 
+    color: #000000da; /* pa ke se vea mejor en el amarillo */
+}
+
+.purple {
+    background-color: #b405e9de; 
+}
+
 
 /* HEADER CON DESGRACIAO TO PRO */
 .main-header {
@@ -276,7 +294,7 @@
 
 .hospital-logo {
     height: 40px;
-    margin-left: 1000px;
+    margin-left: 1500px;
 }
 
 .inicio-btn {
@@ -376,4 +394,27 @@
 .hidden {
     display: none;
 }
+
+
+.leyenda-boxes {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin: 1rem 1rem 0 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.color-circulo {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    vertical-align: middle;
+}
+
+.color-circulo.gray { background-color: #666666c7; }
+.color-circulo.red { background-color: #db1866b7; }
+.color-circulo.yellow { background-color: #ffc107b7; }
 

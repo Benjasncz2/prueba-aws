@@ -76,6 +76,11 @@
     <div class="main-content">
         <div class="titulo-content">
             <h2>BOXES</h2>
+            <div class="leyenda-boxes">
+                <div><span class="color-circulo gray"></span> Disponible</div>
+                <div><span class="color-circulo red"></span> En uso</div>
+                <div><span class="color-circulo yellow"></span> En Mantención</div>
+            </div>
             <div class="filtrar-wrapper">
                 <button class="filtrar-btn" onclick="toggleFiltro()">Filtrar</button>
                 <div class="dropdown-filtro hidden">
@@ -93,18 +98,16 @@
                 </div>
                 <div class="boxes">
                     {% for box in pasillo.box_set.all %}
-                        <div class="box">
-                            Box {{ box.numerobox }}
-                            {% if box.idestadobox.descripcionestadobox == "Disponible" %}
-                                <div class="status green"></div>
-                            {% elif box.idestadobox.descripcionestadobox == "No disponible" %}
-                                <div class="status red"></div>
-                            {% elif box.idestadobox.descripcionestadobox == "En mantención" %}
-                                <div class="status yellow"></div>
-                            {% else %}
-                                <div class="status gray"></div>  {# Un fallback si llega algo inesperado #}
-                            {% endif %}
-                        </div>
+                    <div class="box
+                    {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
+                    {% elif box.idestadobox.descripcionestadobox == 'No disponible' %}red
+                    {% elif box.idestadobox.descripcionestadobox == 'En mantención' %}yellow
+                    {% else %}purple
+                    {% endif %}
+                    ">
+                    Box {{ box.numerobox }}
+                    </div>
+                
                     {% empty %}
                         <p>No hay boxes en este pasillo.</p>
                     {% endfor %}
@@ -143,22 +146,23 @@
     }
 
     function filtrarBoxes(filtro) {
-        const boxes = document.querySelectorAll('.box');
-        boxes.forEach(box => {
-            const estado = box.querySelector('.status').classList;
-            const visible = (
-                (filtro === 'Disponible' && estado.contains('green')) ||
-                (filtro === 'Ocupado' && estado.contains('red')) ||
-                (filtro === 'En mantención' && estado.contains('yellow')) ||
-                (filtro === 'Todos')
-            );
+    const boxes = document.querySelectorAll('.box');
 
-            box.style.display = visible ? 'block' : 'none';
-        });
+    boxes.forEach(box => {
+        const classes = box.classList;
+        const visible = (
+            (filtro === 'Disponible' && classes.contains('gray')) ||
+            (filtro === 'Ocupado' && classes.contains('red')) ||
+            (filtro === 'En mantención' && classes.contains('yellow')) ||
+            (filtro === 'Todos')
+        );
 
-        // Ocultar el menú después de seleccionar
-        toggleFiltro();
-    }
+        box.style.display = visible ? 'block' : 'none';
+    });
+
+    toggleFiltro(); // Cierra el menú de filtro
+}
+
 </script>
 
 </html>

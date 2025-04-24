@@ -151,8 +151,8 @@
 
 
 .sidebar ul li .tooltip {
-    background-color: #fff;  /* o cualquier color sólido */
-    color: #000;             /* texto negro */
+    background-color: #fff;  
+    color: #000;             
     font-weight: bold;      
     opacity: 0;              
     transition: opacity 0.3s ease;
@@ -211,8 +211,8 @@
 
 
   .pasillo {
-    position: relative; /* Necesario para que z-index funcione */
-    z-index: 10;         /* Más alto que 0, pero más bajo que tooltip */
+    position: relative; 
+    z-index: 10;         
   }
 
   .pasillo-header {
@@ -270,16 +270,18 @@
     position: relative;
     top: 0;
     left: 80px;
-    height: 70px;
+    height: auto; 
     width: calc(100% - 80px);
-    background: linear-gradient(to right,  #05b5af, #ffffff); /* desgracio del header */
+    background: linear-gradient(to right, #05b5af, #ffffff);
     display: flex;
+    flex-wrap: wrap; 
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.5rem;
+    padding: 0.5rem 1rem;
     transition: all 0.3s ease;
     z-index: 999;
 }
+
 
 .sidebar.active ~ .main-header {
     left: 250px;
@@ -289,13 +291,19 @@
 .header-content {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    justify-content: space-between;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
+
 
 .hospital-logo {
     height: 40px;
-    margin-left: 1500px;
+    max-width: 100%;
+    margin-left: auto; 
 }
+
 
 .inicio-btn {
     background-color: #fff;
@@ -313,17 +321,62 @@
 }
 /*LA VOLAS DEL FOOTER */
 
-.main_footer {
+.main_footer{
+    width: 100%;
     background-color: #21005D;
-    position:relative;
     color: white;
 }
 
-.footer_content {
+.main_footer .grupo1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    padding: 45px 15px;
+}
+
+.main_footer .grupo1 .footer-item{
     display: flex;
-    align-items: center;     /* centra verticalmente */
-    justify-content: center; /* centra horizontalmente */
-    height: 100%;            
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.main_footer .grupo1 .footer-item figure{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.main_footer .grupo1 .footer-item figure img{
+    max-width: 150px;
+    height: auto;
+}
+
+.main_footer .grupo1 .footer-item h2{
+    color: white;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.main_footer .grupo1 .footer-item p{
+    color: white;
+    margin-bottom: 15px;
+}
+
+.main_footer .grupo2{
+    background-color: #170042;
+    padding: 15px 10px;
+    text-align: center;
+}
+
+.main_footer .grupo2 small{
+    font-size: 14px;
 }
 
 /*TODO LO DEL TITULO Y EL BOTON DE FILTRAR */
@@ -332,22 +385,21 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
     margin: 1.5rem 0;
     padding: 0 1rem;
+    gap: 1rem;
 }
 
 .titulo-content h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    color: #21005D;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    margin: 0;
+    font-size: 2rem;
+    flex: 1 1 200px;
+    word-break: break-word;
 }
 
 .filtrar-btn {
     padding: 1rem 1.5rem;
-    background-color: #21005D;
+    background-color: #21005dcb;
     color: white;
     border: none;
     border-radius: 8px;
@@ -362,6 +414,7 @@
 
 .filtrar-wrapper {
     position: relative;
+    display: inline-block; /* o block, si es necesario */;
 }
 
 .dropdown-filtro {

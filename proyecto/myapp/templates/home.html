@@ -91,23 +91,23 @@
                 </div>
             </div>
         </div>
+        
         {% for pasillo in pasillos %}
             <div class="pasillo">
                 <div class="pasillo-header" onclick="toggleBoxes(this)">
                     {{ pasillo.nombrepasillo }} ▼
                 </div>
+                
                 <div class="boxes">
                     {% for box in pasillo.box_set.all %}
-                    <div class="box
-                    {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
-                    {% elif box.idestadobox.descripcionestadobox == 'No disponible' %}red
-                    {% elif box.idestadobox.descripcionestadobox == 'En mantención' %}yellow
-                    {% else %}purple
-                    {% endif %}
-                    ">
-                    Box {{ box.numerobox }}
-                    </div>
-                
+                        <div class="box
+                        {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
+                        {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
+                        {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
+                        {% else %} purple
+                        {% endif %}">
+                            Box {{ box.numerobox }}
+                        </div>
                     {% empty %}
                         <p>No hay boxes en este pasillo.</p>
                     {% endfor %}
@@ -117,8 +117,27 @@
     </div>
     <footer>
         <div class="main_footer">
-            <div class="footer_content">
-                <h2>VesperDevs 2025</h2>
+            <div class="grupo1">
+                <div class="footer-item">
+                    <figure>
+                        <a href="#">
+                            <img src="{% static 'images/logo_vesperdevs_fondoazul.png' %}" alt="Logo Vesperdevs">
+                        </a>
+                    </figure>
+                </div>
+                <div class="footer-item">
+                    <h2>SOBRE NOSOTROS</h2>
+                    <p>En VesperDevs, somos un equipo de desarrolladores dedicados a crear soluciones innovadoras.</p>
+                </div>
+                <div class="footer-item">
+                    <h2>CONTÁCTANOS</h2>
+                    <p>be.sanchezt@udd.cl</p>
+                    <p>b.pintof@udd.cl</p>
+                    <p>a.pintos@udd.cl</p>
+                </div>
+            </div>
+            <div class="grupo2">
+                <small>&copy; 2025 <b>VesperDevs</b> - Todos los Derechos Reservados.</small>
             </div>
         </div>
     </footer>

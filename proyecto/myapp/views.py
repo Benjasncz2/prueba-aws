@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse 
-from .models import Pasillo, Box, Estadobox, Medico
+from .models import Pasillo, Box, Estadobox, Medico, Boximplemento
 from django.db import connection
 from django.db.models import Count, Q
+from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 def disponibilidad_boxes(request):
     pasillos = Pasillo.objects.prefetch_related(
@@ -33,6 +35,29 @@ def disponibilidad(request):
     pasillos = Pasillo.objects.prefetch_related('box_set__idestadobox').all()
     return render(request, 'boxes.html', {'pasillos': pasillos})
 
+
+def cambiar_estado_implemento(request, implemento_id, box_id, nuevo_estado):
+    try:
+        box_implemento = get_object_or_404(
+            Boximplemento,
+            idimplemento=implemento_id,
+            idbox=box_id
+        )
+        
+        if box_implemento.cambiar_estado(nuevo_estado):
+            messages.success(request, "Estado del implemento actualizado")
+        else:
+            messages.error(request, "No se pudo cambiar el estado")
+            
+    except Exception as e:
+        messages.error(request, f"Error: {str(e)}")
+    
+    return redirect('Implementos.html')
+
+
+
+def implementos(request):
+    return render(request, 'Implementos.html')
 
 def login(request):
     return render(request, 'login.html')

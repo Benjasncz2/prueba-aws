@@ -1,0 +1,411 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#mitabla{
+    border: red 5px solid;
+}
+
+.miclase1{
+    color: crimson;
+}
+
+.miclase2{
+    font-size: 20px;
+    background-color: darkgreen;
+}
+
+.sidebar{
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background-color: #ffffff;
+    padding: .4rem .8rem;
+    transition: all 0.5s ease;
+}
+.sidebar.active ~ .main-content {
+    left: 250px;
+    width: calc(100% - 250px);;
+}
+
+.sidebar.active{
+    width: 250px;
+}
+
+.sidebar #btn {
+    position: absolute;
+    color: #000;
+    top: .4rem;
+    left: 50%;
+    font-size: 1.2rem;
+    line-height: 50px;
+    transform: translateX(-50%);
+    cursor: pointer;
+}
+
+.sidebar.active #btn {
+    left: 90%;
+}
+
+.sidebar .top .logo{
+    color: #000;
+    display: flex;
+    height: 50px;
+    width: 100%;
+    align-items: center;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.sidebar.active .top .logo{
+    opacity: 1;
+}
+
+.top .logo i {
+    font-size: 2rem;
+    margin-right: 5px;
+}
+
+.user{
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+}
+
+.user p {
+    color: #000;
+    opacity: 1;
+    margin-left: 1rem;
+}
+
+
+.bold {
+    font-weight: 600;
+}
+
+.sidebar p {
+    opacity: 0;
+}
+
+.sidebar.active p{
+    opacity: 1;
+}
+
+.sidebar ul li {
+    position: relative;
+    list-style-type: none;
+    height: 50px;
+    width: 90%;
+    margin: 0.8rem auto;
+    line-height: 50px;
+}
+
+.sidebar ul li a { /* Color de las letras al lado del icono */
+    color: #000;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 0.8rem;
+}
+
+.sidebar ul li a:hover {
+    background-color: #b4f1e9;
+    color: #12171e;
+}
+
+.sidebar ul li a i {
+    min-width: 50px;
+    text-align: center;
+    height: 50px;
+    border-radius: 12px;
+    line-height: 50px;
+}
+
+.sidebar .nav-item {
+    opacity: 0;
+}
+
+
+.sidebar.active .nav-item {
+    opacity: 1;
+}
+
+
+.sidebar ul li .tooltip {
+    position: absolute;
+    left: 125px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.2);
+    border-radius: .6rem;
+    padding: .4rem 1.2rem ;
+    line-height: 1.8rem;
+    z-index: 20;
+    opacity: 0;
+}
+
+
+.sidebar ul li .tooltip {
+    background-color: #fff;  
+    color: #000;             
+    font-weight: bold;      
+    opacity: 0;              
+    transition: opacity 0.3s ease;
+}
+
+
+.sidebar ul li:hover .tooltip {
+    opacity: 0;
+}
+
+.sidebar.active ul li .tooltip {
+    display: none;
+}
+
+
+
+.main-content {
+    position: relative;
+    background-color: #eee;
+    min-height: 100vh;
+    top: 0;
+    left: 80px;
+    transition: all 0.5s ease;
+    width: calc(100% - 80px);
+    padding: 1rem;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.user_img{
+    width: 50px;
+    border-radius: 100%;
+    border: 1px solid #eee;
+}
+
+/* HEADER CON DESGRACIAO TO PRO */
+.main-header {
+    position: relative;
+    top: 0;
+    left: 80px;
+    height: auto; 
+    width: calc(100% - 80px);
+    background: linear-gradient(to right, #05b5af, #ffffff);
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+
+.sidebar.active ~ .main-header {
+    left: 250px;
+    width: calc(100% - 250px);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+
+.hospital-logo {
+    height: 40px;
+    max-width: 100%;
+    margin-left: auto; 
+}
+
+
+.inicio-btn {
+    background-color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.inicio-btn:hover {
+    background-color: #f0f0f0;
+}
+
+/* VISUALIZACIONES EPICAS DE DOCTORES */
+
+.medicos-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 25px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.medico-card {
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.medico-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-color: #05b5af;
+}
+
+.medico-avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #05b5af;
+    background-color: #f0f8ff;
+}
+
+.medico-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.medico-info h3 {
+    color: #37527a;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.medico-info p {
+    color: #666;
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.medico-info p.especialidad {
+    color: #05b5af;
+    font-weight: 500;
+}
+
+.no-medicos {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    color: #666;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .medicos-container {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .medicos-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .medico-avatar {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+/*LA VOLAS DEL FOOTER */
+
+.main_footer{
+    width: 100%;
+    background-color: #21005D;
+    color: white;
+}
+
+.main_footer .grupo1{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 40px;
+    padding: 45px 15px;
+}
+
+.main_footer .grupo1 .footer-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.main_footer .grupo1 .footer-item figure{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.main_footer .grupo1 .footer-item figure img{
+    max-width: 150px;
+    height: auto;
+}
+
+.main_footer .grupo1 .footer-item h2{
+    color: white;
+    margin-bottom: 25px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.main_footer .grupo1 .footer-item p{
+    color: white;
+    margin-bottom: 15px;
+}
+
+.main_footer .grupo2{
+    background-color: #170042;
+    padding: 15px 10px;
+    text-align: center;
+}
+
+.main_footer .grupo2 small{
+    font-size: 14px;
+}
+
+/*TODO LO DEL TITULO Y EL BOTON DE FILTRAR */
+
+.titulo-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+    padding: 0 1rem;
+    gap: 1rem;
+    color: #122138;
+}
+
+.titulo-content h2 {
+    font-size: 2rem;
+    flex: 1 1 200px;
+    word-break: break-word;
+}

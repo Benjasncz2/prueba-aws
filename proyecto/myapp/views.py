@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse 
-from .models import Pasillo, Box, Estadobox
+from .models import Pasillo, Box, Estadobox, Medico
 from django.db import connection
 from django.db.models import Count, Q
 
@@ -47,7 +47,8 @@ def agenda(request):
     return render(request, 'agenda.html')
 
 def personal(request):
-    return render(request, 'personal.html')
+    medicos = Medico.objects.all().order_by('apellidomedico')
+    return render(request, 'personal.html', {'medicos': medicos})
 
 def dashboard(request):
     return render(request, 'dashboard.html')

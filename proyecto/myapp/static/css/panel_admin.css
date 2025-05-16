@@ -1,0 +1,112 @@
+.main-content {
+    position: relative;
+    background-color: #eee;
+    min-height: 100vh;
+    top: 0;
+    left: 80px;
+    transition: all 0.5s ease;
+    width: calc(100% - 80px);
+    padding: 1rem;
+}
+
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.user_img{
+    width: 50px;
+    border-radius: 100%;
+    border: 1px solid #eee;
+}
+
+/*TODO LO DEL TITULO */
+
+.titulo-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 1.5rem 0;
+    padding: 0 1rem;
+    gap: 1rem;
+    color: #122138;
+}
+
+.titulo-content h2 {
+    font-size: 2rem;
+    flex: 1 1 200px;
+    word-break: break-word;
+}
+
+/* BOTONES DEL FOKIN PANEL */
+.button-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+    padding: 40px;
+    justify-content: center;
+}
+
+.big-button {
+    position: relative;
+    background-color: #d2e4ed;
+    border: 2px solid #37527a;
+    border-radius: 12px;
+    padding: 20px;
+    width: 300px;
+    height: 180px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #37527a;
+    margin-right: 30px;
+}
+
+.big-button::after {
+    content: "→";
+    position: absolute;
+    right: -30px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 120px;
+    background-color: #d32278;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 0 6px 6px 0;
+    pointer-events: none;
+}
+
+.big-button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.big-button img {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 12px;
+}
+
+.big-button span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #37527a;
+}
+
+.big-button {
+    flex: 0 0 300px;
+}
+
+a.big-button {
+    text-decoration: none;
+}

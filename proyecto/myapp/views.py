@@ -51,3 +51,6 @@ def personal(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+def box(request):
+    return render(request, 'box.html')

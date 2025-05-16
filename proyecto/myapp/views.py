@@ -23,7 +23,7 @@ def disponibilidad_boxes(request):
             'disponibles': disponibles
         })
 
-    return render(request, 'home.html', {
+    return render(request, 'boxes.html', {
         'pasillos_data': pasillos_data,
         'total_disponibles': total_disponibles
     })
@@ -31,11 +31,23 @@ def disponibilidad_boxes(request):
 
 def disponibilidad(request):
     pasillos = Pasillo.objects.prefetch_related('box_set__idestadobox').all()
-    return render(request, 'home.html', {'pasillos': pasillos})
+    return render(request, 'boxes.html', {'pasillos': pasillos})
 
 
 def login(request):
     return render(request, 'login.html')
 
-def home(request):
-    return render(request, 'home.html')
+def boxes(request):
+    return render(request, 'boxes.html')
+
+def panel_admin(request):
+    return render(request, 'panel_admin.html')
+
+def agenda(request):
+    return render(request, 'agenda.html')
+
+def personal(request):
+    return render(request, 'personal.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html')

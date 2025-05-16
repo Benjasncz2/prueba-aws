@@ -6,7 +6,7 @@
     <title>Panel de administración</title>
     {% load static %}
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estiloBoxes.css' %}">
 </head>
 
 <body>    
@@ -66,7 +66,7 @@
 
     <header class="main-header">
         <div class="header-content">
-            <button class="inicio-btn">Inicio</button>
+            <button class="inicio-btn" onclick="window.location.href='/panel'">Inicio</button>
             <div class="logo-box">
                 <img src="{% static 'images/logo_hospital.png' %}" alt="Logo Hospital" class="hospital-logo">
             </div>

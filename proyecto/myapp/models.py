@@ -219,7 +219,21 @@ class Boximplemento(models.Model):
         managed = False
         db_table = 'boximplemento'
         unique_together = (('idimplemento', 'idbox'),)
+    def cambiar_estado(self, nuevo_estado):
+        estado_anterior = self.idestadoimplemento_id
+        self.idestadoimplemento_id = nuevo_estado
+        self.save()
+        
+        from .observers import NotificadorCambioEstado
+        NotificadorCambioEstado().notificar(
+            self.idimplemento,
+            estado_anterior,
+            nuevo_estado
+        )
+        return True
 
+    def marcar_no_disponible(self):
+        return self.cambiar_estado(3)
 
 class Consulta(models.Model):
     idconsulta = models.AutoField(db_column='idConsulta', primary_key=True)  # Field name made lowercase.

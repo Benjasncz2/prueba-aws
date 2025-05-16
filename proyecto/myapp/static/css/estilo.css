@@ -205,7 +205,7 @@
 }
 
 .pasillo:hover {
-    background-color: #b4f1e9;
+    background-color: #b4f1e965;
     border-color: #000000;
 }
 
@@ -248,15 +248,17 @@
 
 /* Colores según estado */
 .gray {
-    background-color: #979797c7; 
+    background-color: #a9a9a9c7; 
+    color: #000000da;
 }
 
 .red {
-    background-color: #05b5af; 
+    background-color: #58c6c2; 
+    color: #000000da;
 }
 
 .yellow {
-    background-color: #ffc107b7; 
+    background-color: #ffc928d8; 
     color: #000000da; /* pa ke se vea mejor en el amarillo */
 }
 
@@ -448,7 +450,7 @@
     display: none;
 }
 
-
+/*
 .leyenda-boxes {
     display: flex;
     gap: 2rem;
@@ -456,6 +458,23 @@
     margin: 1rem 1rem 0 1rem;
     font-weight: 500;
     color: #333;
+}
+*/
+
+.leyenda-boxes {
+    background-color: #f0f4f8;
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    gap: 1.25rem;
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #000000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    height: 50px;
+    vertical-align: middle;
 }
 
 .color-circulo {
@@ -478,26 +497,27 @@
     border-left: 4px solid #05b5af;
     border-radius: 6px;
     padding: 8px 12px;
-    display: inline-block;
-    font-size: 0.9rem;
+    display: flex;
+    flex-direction: row; 
+    align-items: center;
+    gap: 10px;
     font-weight: bold;
     color: #000000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    height: 50px; /* similar a botón */
-    line-height: 22px;
+    height: 50px;
     vertical-align: middle;
 }
 
 
 .card-titulo {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #333;
-    margin-bottom: 6px;
+    margin-bottom: 2px;
     font-weight: bold;
 }
 
 .card-numero {
-    font-size: 1.5rem;
-    color: #05b5af;
+    font-size: 1.8rem;
+    color: #23b5b0;
     font-weight: bold;
 }

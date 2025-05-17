@@ -1,4 +1,3 @@
-/* ===== ESTILOS GENERALES ===== */
 .main-content {
     position: relative;
     background-color: #eee;
@@ -10,7 +9,6 @@
     padding: 2rem;
 }
 
-/* ===== CABECERA Y CONTROLES ===== */
 .titulo-content {
     display: flex;
     flex-direction: column;
@@ -36,7 +34,6 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
-/* Selector de fecha */
 .selector-fecha {
     display: flex;
     align-items: center;
@@ -62,7 +59,6 @@
     box-shadow: 0 0 8px rgba(5, 181, 175, 0.2);
 }
 
-/* Hora actual y botón */
 .hora-actual {
     display: flex;
     align-items: center;
@@ -107,7 +103,6 @@
     box-shadow: 0 2px 5px rgba(5, 181, 175, 0.3);
 }
 
-/* ===== TABLA CON SCROLL FUNCIONAL ===== */
 .tabla-container {
     background: white;
     border-radius: 10px;
@@ -155,7 +150,6 @@
     vertical-align: middle;
 }
 
-/* Efectos hover y estados */
 .tabla-agenda tr:hover {
     background-color: #f5f5f5;
 }
@@ -176,7 +170,6 @@
     background-color: #f0f0f0;
 }
 
-/* Acciones */
 .acciones {
     display: flex;
     gap: 0.5rem;
@@ -209,7 +202,6 @@
     color: #e74c3c;
 }
 
-/* Scrollbar personalizado */
 .tabla-scroll::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -229,7 +221,6 @@
     background: #048a85;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .main-content {
         left: 0;
@@ -254,7 +245,7 @@
     }
     
     .tabla-agenda {
-        min-width: 800px; /* Forzar scroll horizontal en móviles */
+        min-width: 800px;
     }
 }
 
@@ -278,7 +269,6 @@
     }
 }
 
-/* ===== FILTROS DE BÚSQUEDA ===== */
 .filtros-busqueda {
     flex-grow: 1;
     margin: 0 1.5rem;
@@ -358,7 +348,6 @@
     color: white;
 }
 
-/* Ajustes responsive para filtros */
 @media (max-width: 992px) {
     .filtros-busqueda {
         margin: 1rem 0;
@@ -382,4 +371,68 @@
         padding: 0.5rem 1rem;
         font-size: 0.9rem;
     }
+}
+
+.tabla-container {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 1.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.tabla-scroll {
+    max-height: 65vh;
+    overflow: auto;
+    position: relative;
+}
+
+.tabla-agenda {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla-agenda thead {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.tabla-agenda thead th {
+    background-color: #05b5af;
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    position: sticky;
+    top: 0;
+}
+
+.tabla-agenda tbody {
+    display: block;
+    overflow-y: auto;
+    max-height: calc(65vh - 60px);
+}
+
+.tabla-agenda tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.tabla-agenda td {
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+    background-color: white;
+}
+
+.tabla-agenda tbody td:nth-child(1) { width: 15%; }
+.tabla-agenda tbody td:nth-child(2) { width: 20%; }
+.tabla-agenda tbody td:nth-child(3) { width: 25%; }
+.tabla-agenda tbody td:nth-child(4) { width: 30%; }
+.tabla-agenda tbody td:nth-child(5) { width: 10%; }
+
+.tabla-agenda tbody tr:hover td {
+    background-color: #f5f5f5;
 }

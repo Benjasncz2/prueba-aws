@@ -12,7 +12,6 @@
             <h2>AGENDA MÉDICA</h2>
             
             <div class="controles-agenda">
-                <!-- Selector de fecha -->
                 <div class="selector-fecha">
                     <form method="get" class="form-fecha">
                         <label for="input-fecha">Seleccionar fecha:</label>
@@ -26,7 +25,6 @@
                     </form>
                 </div>
                 
-                <!-- Filtros de búsqueda -->
                 <div class="filtros-busqueda">
                     <form method="get" class="form-filtros">
                         <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
@@ -61,7 +59,6 @@
                     </form>
                 </div>
                 
-                <!-- Hora actual y botón de próximas -->
                 <div class="hora-actual">
                     <span>Hora: {{ hora_actual|time:"H:i" }}</span>
                     <form method="get" class="form-proximas">
@@ -76,17 +73,16 @@
                 </div>
             </div>
         </div>
-        <!-- Tabla de consultas - Versión con scroll -->
         <div class="tabla-container">
             <div class="tabla-scroll">
                 <table class="tabla-agenda">
                     <thead>
                         <tr>
-                            <th>Hora</th>
-                            <th>Box</th>
-                            <th>Médico</th>
-                            <th>Paciente</th>
-                            <th>Acciones</th>
+                            <th style="width: 15%;">Hora</th>
+                            <th style="width: 20%;">Box</th>
+                            <th style="width: 25%;">Médico</th>
+                            <th style="width: 25%;">Paciente</th>
+                            <th style="width: 15%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

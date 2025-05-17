@@ -141,7 +141,8 @@ def box_detail(request, box_id):
     box = get_object_or_404(Box, pk=box_id)
     especialidad = box.especialidadbox
     estado = box.idestadobox.descripcionestadobox
-    implementos = Implemento.objects.filter(boximplemento__idbox=box.idbox)
+    
+    implementos = Implemento.objects.filter(boximplemento__idbox=box.idbox).values_list('nombreimplemento', flat=True)
 
     fecha_filtro = request.GET.get('fecha', '')
     medico_filtro = request.GET.get('medico', '')

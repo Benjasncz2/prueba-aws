@@ -95,6 +95,10 @@ def agenda(request):
     
     mostrar_actuales = 'mostrar_actuales' in request.GET
     
+    # Obtener parámetros de filtro
+    filtro_medico = request.GET.get('medico', '')
+    filtro_paciente = request.GET.get('paciente', '')
+    
     if mostrar_actuales:
         fecha_seleccionada = fecha_hoy
     else:
@@ -108,6 +112,19 @@ def agenda(request):
     ).filter(
         fechaconsulta=fecha_seleccionada
     ).order_by('horainicio')
+    
+    # Aplicar filtros
+    if filtro_medico:
+        consultas = consultas.filter(
+            Q(rutmedico__nombremedico__icontains=filtro_medico) |
+            Q(rutmedico__apellidomedico__icontains=filtro_medico)
+        )
+    
+    if filtro_paciente:
+        consultas = consultas.filter(
+            Q(rutpaciente__nombrepaciente__icontains=filtro_paciente) |
+            Q(rutpaciente__apellidopaciente__icontains=filtro_paciente)
+        )
     
     if mostrar_actuales:
         consultas = consultas.filter(horainicio__gte=hora_actual)

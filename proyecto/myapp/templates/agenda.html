@@ -20,14 +20,51 @@
                                name="fecha"
                                value="{{ fecha_seleccionada|date:'Y-m-d' }}"
                                min="{{ hoy|date:'Y-m-d' }}"
-                               max="{{ hoy|date:'Y-m-d'|add:'+12 months' }}"
+                               max="{{ hoy|date:'Y-m-d'|add:'+3 months' }}"
                                onchange="this.form.submit()">
+                    </form>
+                </div>
+                
+                <div class="filtros-busqueda">
+                    <form method="get" class="form-filtros">
+                        <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
+                        
+                        <div class="filtro-group">
+                            <i class='bx bx-search'></i>
+                            <input type="text" 
+                                   name="medico" 
+                                   placeholder="Buscar médico..." 
+                                   value="{{ request.GET.medico }}"
+                                   class="input-filtro">
+                        </div>
+                        
+                        <div class="filtro-group">
+                            <i class='bx bx-search'></i>
+                            <input type="text" 
+                                   name="paciente" 
+                                   placeholder="Buscar paciente..." 
+                                   value="{{ request.GET.paciente }}"
+                                   class="input-filtro">
+                        </div>
+                        
+                        <button type="submit" class="btn-filtrar">
+                            <i class='bx bx-filter-alt'></i> Filtrar
+                        </button>
+                        
+                        {% if request.GET.medico or request.GET.paciente %}
+                        <a href="?fecha={{ fecha_seleccionada|date:'Y-m-d' }}" class="btn-limpiar">
+                            <i class='bx bx-x'></i> Limpiar
+                        </a>
+                        {% endif %}
                     </form>
                 </div>
                 
                 <div class="hora-actual">
                     <span>Hora: {{ hora_actual|time:"H:i" }}</span>
                     <form method="get" class="form-proximas">
+                        <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
+                        <input type="hidden" name="medico" value="{{ request.GET.medico }}">
+                        <input type="hidden" name="paciente" value="{{ request.GET.paciente }}">
                         <input type="hidden" name="mostrar_actuales" value="true">
                         <button type="submit" class="btn-actuales {% if mostrar_actuales %}activo{% endif %}">
                             <i class='bx bx-time'></i> Ver próximas
@@ -36,18 +73,16 @@
                 </div>
             </div>
         </div>
-
-        <!-- Tabla de consultas - Versión con scroll -->
         <div class="tabla-container">
             <div class="tabla-scroll">
                 <table class="tabla-agenda">
                     <thead>
                         <tr>
-                            <th>Hora</th>
-                            <th>Box</th>
-                            <th>Médico</th>
-                            <th>Paciente</th>
-                            <th>Acciones</th>
+                            <th style="width: 15%;">Hora</th>
+                            <th style="width: 20%;">Box</th>
+                            <th style="width: 25%;">Médico</th>
+                            <th style="width: 25%;">Paciente</th>
+                            <th style="width: 15%;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>

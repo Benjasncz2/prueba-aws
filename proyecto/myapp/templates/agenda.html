@@ -1,0 +1,122 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Agenda Médica{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/agenda.css' %}">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+{% endblock %}
+
+{% block content %}    
+    <div class="main-content">
+        <div class="titulo-content">
+            <h2>AGENDA MÉDICA</h2>
+            
+            <div class="controles-agenda">
+                <!-- Selector de fecha mejorado -->
+                <div class="selector-fecha">
+                    <form method="get" class="form-fecha">
+                        <label for="input-fecha">Seleccionar fecha:</label>
+                        <input type="date" 
+                               id="input-fecha"
+                               name="fecha"
+                               value="{{ fecha_seleccionada|date:'Y-m-d' }}"
+                               min="{{ hoy|date:'Y-m-d' }}"
+                               max="{{ hoy|date:'Y-m-d'|add:'+14 days' }}"
+                               onchange="this.form.submit()">
+                    </form>
+                </div>
+                
+                <!-- Hora actual y botón -->
+                <div class="hora-actual">
+                    <span>{{ hora_actual|time:'H:i' }}</span>
+                    <form method="get">
+                        <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
+                        <button type="submit" 
+                                name="mostrar_actuales" 
+                                class="btn-actuales {% if mostrar_actuales %}activo{% endif %}">
+                            <i class='bx bx-time'></i> Ver próximas
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de consultas -->
+        <div class="tabla-agenda">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hora</th>
+                        <th>Box</th>
+                        <th>Médico</th>
+                        <th>Paciente</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for consulta in consultas %}
+                    <tr class="{% if mostrar_actuales and consulta.horainicio < hora_actual %}consulta-pasada{% endif %}">
+                        <td>{{ consulta.horainicio|time:"H:i" }}</td>
+                        <td>Box {{ consulta.idbox.numerobox }}</td>
+                        <td>
+                            Dr. {{ consulta.rutmedico.nombremedico }} 
+                            {{ consulta.rutmedico.apellidomedico }}
+                        </td>
+                        <td>
+                            {{ consulta.rutpaciente.nombrepaciente }}
+                            {{ consulta.rutpaciente.apellidopaciente }}
+                            <small>({{ consulta.rutpaciente.rutpaciente }})</small>
+                        </td>
+                        <td class="acciones">
+                            <button class="btn-accion" title="Ver detalles">
+                                <i class='bx bx-show'></i>
+                            </button>
+                            <button class="btn-accion" title="Editar">
+                                <i class='bx bx-edit'></i>
+                            </button>
+                            <button class="btn-accion" title="Cancelar">
+                                <i class='bx bx-x'></i>
+                            </button>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="sin-resultados">
+                            {% if mostrar_actuales %}
+                                No hay consultas próximas para esta fecha
+                            {% else %}
+                                No hay consultas programadas para esta fecha
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Configurar fecha mínima/máxima dinámicamente
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputFecha = document.getElementById('input-fecha');
+        const hoy = new Date().toISOString().split('T')[0];
+        const fechaMaxima = new Date();
+        fechaMaxima.setDate(fechaMaxima.getDate() + 14);
+        const fechaMaxStr = fechaMaxima.toISOString().split('T')[0];
+        
+        inputFecha.min = hoy;
+        inputFecha.max = fechaMaxStr;
+        
+        // Actualizar cada minuto la hora
+        function actualizarHora() {
+            const ahora = new Date();
+            document.querySelector('.hora-actual span').textContent = 
+                ahora.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+        
+        setInterval(actualizarHora, 60000);
+    });
+</script>
+{% endblock %}

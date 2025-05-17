@@ -26,6 +26,8 @@ urlpatterns = [
     path('dashboard/', views.dashboard),
     path('personal/', views.personal),
     path('agenda/', views.agenda),
+    path('box/', views.box),
     path('implementos/', views.implementos),
-    path('cambiar_estado/<int:implemento_id>/<int:box_id>/<int:nuevo_estado>/',views.cambiar_estado_implemento,name='cambiar_estado')
+    path('cambiar_estado/<int:implemento_id>/<int:box_id>/<int:nuevo_estado>/',views.cambiar_estado_implemento,name='cambiar_estado'),
+    path('boxes/<int:box_id>/', views.box_detail, name='box_detail')
 ]

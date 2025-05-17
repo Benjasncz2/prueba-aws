@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse 
-from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento
+from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento, Implemento, Consulta, Paciente
 from django.db import connection
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
@@ -84,6 +84,47 @@ def cambiar_estado_implemento(request, implemento_id, box_id, nuevo_estado):
         messages.error(request, f"Error: {str(e)}")
     
     return redirect('Implementos.html')
+
+def box_detail(request, box_id):
+    box = get_object_or_404(Box, pk=box_id)
+    especialidad = box.especialidadbox
+    estado = box.idestadobox.descripcionestadobox
+    
+    implementos = Implemento.objects.filter(
+        boximplemento__idbox=box.idbox
+    )
+
+    consultas = Consulta.objects.filter(idbox=box.idbox).select_related('rutmedico', 'rutpaciente')
+
+    turnos = []
+    for consulta in consultas:
+        try:
+            medico = Medico.objects.get(rutmedico=consulta.rutmedico)
+            medico_nombre = f'{medico.nombremedico} {medico.apellidomedico}'
+        except Medico.DoesNotExist:
+            medico_nombre = 'Sin médico asignado'
+        
+        try:
+            paciente = Paciente.objects.get(rutpaciente=consulta.rutpaciente)
+            paciente_nombre = f'{paciente.nombrepaciente} {paciente.apellidopaciente}'
+        except Paciente.DoesNotExist:
+            paciente_nombre = 'Sin paciente asignado'
+
+        turnos.append({
+            'medico': medico_nombre,
+            'paciente': paciente_nombre,
+            'fecha': consulta.fechaconsulta,
+            'hora': consulta.horainicio
+        })
+
+    context = {
+        'n_box': box.numerobox,
+        'especialidad': especialidad,
+        'estado': estado,
+        'implementos': implementos,
+        'turnos': turnos,
+    }
+    return render(request, 'box.html', context)
 
 def implementos(request):
     return render(request, 'Implementos.html')

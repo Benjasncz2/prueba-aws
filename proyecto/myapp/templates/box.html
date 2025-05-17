@@ -7,8 +7,60 @@
 {% endblock %}
 
 {% block content %}
-
-
+<div class="main-content">
+    <div class="box-container">
+        <h2 class="box-title">BOX N°{{ n_box }}</h2>
+        <div class="box-info-layout">
+            <div class="box-info">
+                <div class="info-card">
+                    <span class="info-icon">👁️</span>
+                    <div>
+                        <strong>Especialidad:</strong> {{ especialidad }}
+                    </div>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">✔️</span>
+                    <div>
+                        <strong>Estado de Box:</strong> {{ estado }}
+                    </div>
+                </div>
+                <div class="info-card">
+                    <span class="info-icon">🛠️</span>
+                    <div>
+                        <strong>Implementos:</strong>
+                        <ul>
+                            {% for implemento in implementos %}
+                            <li>{{ implemento.nombreImplemento }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="box-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>MÉDICO</th>
+                            <th>PACIENTE</th>
+                            <th>FECHA</th>
+                            <th>HORA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for turno in turnos %}
+                        <tr>
+                            <td>{{ turno.medico }}</td>
+                            <td>{{ turno.paciente }}</td>
+                            <td>{{ turno.fecha|date:"d-m-Y" }}</td>
+                            <td>{{ turno.hora|date:"H:i" }}</td>
+                        {% endfor %}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}

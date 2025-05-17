@@ -39,14 +39,16 @@
             
             <div class="boxes">
                 {% for box in item.boxes %}
-                    <div class="box
-                    {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
-                    {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
-                    {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
-                    {% else %} purple
-                    {% endif %}">
+                    <a href="{% url 'box_detail' numeroBox %}" style="text-decoration: none;">
+                        <div class="box
+                        {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
+                        {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
+                        {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
+                        {% else %} purple
+                        {% endif %}">
                         Box {{ box.numerobox }}
-                    </div>
+                        </div>
+                    </a>
                 {% empty %}
                     <p>No hay boxes en este pasillo.</p>
                 {% endfor %}

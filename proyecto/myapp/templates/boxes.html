@@ -56,6 +56,7 @@
     </div>
 {% endblock %}
 
+{% block extra_js %}
 <script>
     function toggleBoxes(header) {
     const boxes = header.nextElementSibling;
@@ -88,3 +89,4 @@
     toggleFiltro(); 
 }
 </script>
+{% endblock %}

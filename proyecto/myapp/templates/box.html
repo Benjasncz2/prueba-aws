@@ -11,12 +11,15 @@
     <div class="box-container">
         <h2 class="box-title">BOX N°{{ n_box }}</h2>
 
-        <form class="box-filter-form" method="get">
-            <input type="text" name="medico" placeholder="Filtrar por médico" value="{{ medico_filtro }}">
-            <input type="date" name="fecha" placeholder="Filtrar por fecha" value="{{ fecha_filtro }}">
-            <button type="submit">Filtrar</button>
-            <a href="?">Limpiar</a>
-        </form>
+        <div class="box-actions">
+            <a href="/boxes" class="all-boxes-btn">← Ver todos los Boxes</a>
+            <form class="box-filter-form" method="get">
+                <input type="text" name="medico" placeholder="Filtrar por médico" value="{{ medico_filtro }}">
+                <input type="date" name="fecha" placeholder="Filtrar por fecha" value="{{ fecha_filtro }}">
+                <button type="submit">Filtrar</button>
+                <a href="?">Limpiar</a>
+            </form>
+        </div>
 
         <div class="box-info-layout">
             <div class="box-info">

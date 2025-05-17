@@ -12,7 +12,6 @@
             <h2>AGENDA MÉDICA</h2>
             
             <div class="controles-agenda">
-                <!-- Selector de fecha mejorado -->
                 <div class="selector-fecha">
                     <form method="get" class="form-fecha">
                         <label for="input-fecha">Seleccionar fecha:</label>
@@ -26,14 +25,12 @@
                     </form>
                 </div>
                 
-                <!-- Hora actual y botón -->
                 <div class="hora-actual">
-                    <span>{{ hora_actual|time:'H:i' }}</span>
-                    <form method="get">
-                        <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
-                        <button type="submit" 
-                                name="mostrar_actuales" 
-                                class="btn-actuales {% if mostrar_actuales %}activo{% endif %}">
+                    <span>Hora: {{ hora_actual|time:"H:i" }}</span>
+                    <form method="get" class="form-proximas">
+                        <!-- Mantener otros parámetros de filtro si los hay -->
+                        <input type="hidden" name="mostrar_actuales" value="true">
+                        <button type="submit" class="btn-actuales {% if mostrar_actuales %}activo{% endif %}">
                             <i class='bx bx-time'></i> Ver próximas
                         </button>
                     </form>
@@ -65,7 +62,6 @@
                         <td>
                             {{ consulta.rutpaciente.nombrepaciente }}
                             {{ consulta.rutpaciente.apellidopaciente }}
-                            <small>({{ consulta.rutpaciente.rutpaciente }})</small>
                         </td>
                         <td class="acciones">
                             <button class="btn-accion" title="Ver detalles">

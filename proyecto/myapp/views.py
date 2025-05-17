@@ -89,34 +89,35 @@ def cambiar_estado_implemento(request, implemento_id, box_id, nuevo_estado):
     return redirect('Implementos.html')
 
 def agenda(request):
-    fecha_seleccionada = request.GET.get('fecha', '')
+    ahora_local = timezone.localtime(timezone.now())
+    fecha_hoy = ahora_local.date()
+    hora_actual = ahora_local.time()
+    
     mostrar_actuales = 'mostrar_actuales' in request.GET
     
-    try:
-        fecha_filtro = date.fromisoformat(fecha_seleccionada) if fecha_seleccionada else date.today()
-    except ValueError:
-        fecha_filtro = date.today()
+    if mostrar_actuales:
+        fecha_seleccionada = fecha_hoy
+    else:
+        try:
+            fecha_seleccionada = date.fromisoformat(request.GET.get('fecha', fecha_hoy.isoformat()))
+        except ValueError:
+            fecha_seleccionada = fecha_hoy
     
     consultas = Consulta.objects.select_related(
         'rutmedico', 'rutpaciente', 'idbox'
     ).filter(
-        fechaconsulta=fecha_filtro
+        fechaconsulta=fecha_seleccionada
     ).order_by('horainicio')
     
     if mostrar_actuales:
-        hora_actual = timezone.now().time()
         consultas = consultas.filter(horainicio__gte=hora_actual)
-    
-    hoy = date.today()
-    fechas = [hoy + timedelta(days=i) for i in range(-7, 8)]
     
     return render(request, 'agenda.html', {
         'consultas': consultas,
-        'fecha_seleccionada': fecha_filtro,
-        'hoy': hoy,
-        'hora_actual': timezone.now().time(),
-        'mostrar_actuales': mostrar_actuales,
-        'fechas_disponibles': fechas
+        'fecha_seleccionada': fecha_seleccionada,
+        'hoy': fecha_hoy,
+        'hora_actual': hora_actual,
+        'mostrar_actuales': mostrar_actuales
     })
 
 def box_detail(request, box_id):

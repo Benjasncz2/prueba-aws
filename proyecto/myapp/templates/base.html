@@ -73,9 +73,7 @@
         </div>
     </header>
 
-    <div class="main-content">
-        {% block content %}{% endblock %}
-    </div>
+    {% block content %}{% endblock %}
 
     <footer>
         <div class="main_footer">
@@ -112,8 +110,10 @@
     let sidebar = document.querySelector('.sidebar')
     btn.onclick = function (){
         sidebar.classList.toggle('active');
-    };    
+    };
+
 </script>
 
 {% block extra_js %}{% endblock %}
+
 </html>

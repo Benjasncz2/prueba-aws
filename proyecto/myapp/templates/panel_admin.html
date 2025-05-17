@@ -1,135 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de administración</title>
-    {% load static %}
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{% static 'css/panel_admin.css' %}">
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
-</head>
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Panel de Administración{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/panel_admin.css' %}">
+{% endblock %}
+ 
 
-<body>    
-    <div class="sidebar">
-        <div class="top">
-            <div class="logo">
-                <i class="bx bxs-book-content"></i>
-                <span>Menú</span>
-            </div>
-            <i class="bx bx-menu" id="btn"></i>
-        </div>
-        <div class="user">
-            <img src="{% static 'images/foto_perfil_image.png' %}" alt="me" class="user_img">
-            <div>
-                <p class="bold">Elmer Figueroa</p>
-                <p>Admin</p>
-            </div>
-        </div>
-        <ul>
-            <li>
-                <a href="#" onclick="window.location.href='/agenda'">
-                    <i class="bx bxs-book-content"></i>
-                    <span class="nav-item">Agenda</span>
-                </a>
-                <span class="tooltip">Agenda</span>
-            </li>
-            <li>
-                <a href="#" onclick="window.location.href='/dashboard'">
-                    <i class="bx bx-line-chart"></i>
-                    <span class="nav-item">Dashboard</span>
-                </a>
-                <span class="tooltip">Dashboard</span>
-            </li> 
-            <li>
-                <a href="#" onclick="window.location.href='/personal'">
-                    <i class="bx bx-group"></i>
-                    <span class="nav-item">Personal</span>
-                </a>
-                <span class="tooltip">Personal</span>
-            </li> 
-            <li>
-                <a href="#" onclick="window.location.href='/boxes'">
-                    <i class="bx bxs-door-open"></i>
-                    <span class="nav-item">Boxes</span>
-                </a>
-                <span class="tooltip">Boxes</span>
-            </li>
-            <li>
-                <a href="#" onclick="window.location.href='/implementos'">
-                    <i class="bx bx-injection"></i>
-                    <span class="nav-item">Implementos</span>
-                </a>
-                <span class="tooltip">Implementos</span>
-            </li> 
-        </ul>
+{% block content %}
+<div class="main-content">
+    <div class="titulo-content">
+        <h2>PANEL DE ADMINISTRACIÓN</h2>
     </div>
 
-    <header class="main-header">
-        <div class="header-content">
-            <button class="inicio-btn" onclick="window.location.href='/panel'">Inicio</button>
-            <div class="logo-box">
-                <img src="{% static 'images/logo_hospital.png' %}" alt="Logo Hospital" class="hospital-logo">
-            </div>
-        </div>
-    </header>
-    
-    <div class="main-content">
-        <div class="titulo-content">
-            <h2>PANEL DE ADMINISTRACIÓN</h2>
-        </div>
-
-        <div class="button-grid">
-            <a href="/agenda" class="big-button">
-                <img src="{% static 'images/icono_agenda.png' %}" alt="Agenda">
-                <span>Agenda</span>
-            </a>
-            <a href="/dashboard" class="big-button">
-                <img src="{% static 'images/icono_dashboard.png' %}" alt="Dashboard">
-                <span>Dashboard</span>
-            </a>
-            <a href="/personal" class="big-button">
-                <img src="{% static 'images/icono_personal.png' %}" alt="Personal">
-                <span>Personal</span>
-            </a>
-            <a href="/boxes" class="big-button">
-                <img src="{% static 'images/icono_boxes.png' %}" alt="Boxes">
-                <span>Boxes</span>
-            </a>
-            <a href="/implementos" class="big-button">
-                <img src="{% static 'images/icono_implementos.png' %}" alt="Implementos">
-                <span>Implementos</span>
-            </a>
-        </div>
+    <div class="button-grid">
+        <a href="/agenda" class="big-button">
+            <img src="{% static 'images/icono_agenda.png' %}" alt="Agenda">
+            <span>Agenda</span>
+        </a>
+        <a href="/dashboard" class="big-button">
+            <img src="{% static 'images/icono_dashboard.png' %}" alt="Dashboard">
+            <span>Dashboard</span>
+        </a>
+        <a href="/personal" class="big-button">
+            <img src="{% static 'images/icono_personal.png' %}" alt="Personal">
+            <span>Personal</span>
+        </a>
+        <a href="/boxes" class="big-button">
+            <img src="{% static 'images/icono_boxes.png' %}" alt="Boxes">
+            <span>Boxes</span>
+        </a>
+        <a href="/implementos" class="big-button">
+            <img src="{% static 'images/icono_implementos.png' %}" alt="Implementos">
+            <span>Implementos</span>
+        </a>
     </div>
-
-    <footer>
-        <div class="main_footer">
-            <div class="grupo1">
-                <div class="footer-item">
-                    <figure>
-                        <a href="#">
-                            <img src="{% static 'images/logo_vesperdevs_fondoazul.png' %}" alt="Logo Vesperdevs">
-                        </a>
-                    </figure>
-                </div>
-                <div class="footer-item">
-                    <h2>SOBRE NOSOTROS</h2>
-                    <p>En VesperDevs, somos un equipo de desarrolladores dedicados a crear soluciones innovadoras.</p>
-                </div>
-                <div class="footer-item">
-                    <h2>CONTÁCTANOS</h2>
-                    <p class="correos">
-                        be.sanchezt@udd.cl<br>
-                        a.pintos@udd.cl<br>
-                        b.pintof@udd.cl
-                    </p>
-                </div>
-            </div>
-            <div class="grupo2">
-                <small>&copy; 2025 <b>VesperDevs</b> - Todos los Derechos Reservados.</small>
-            </div>
-        </div>
-    </footer>
-</body>
+</div>
+{% endblock %}
 </html>

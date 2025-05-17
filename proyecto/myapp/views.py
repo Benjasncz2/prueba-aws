@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse 
-from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento, Implemento, Consulta, Paciente
+from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento, Consulta, Paciente, Implemento
 from django.db import connection
 from django.db.models import Count, Q
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
+from django.utils import timezone
+from datetime import date, timedelta
 
 def disponibilidad_boxes(request):
     pasillos = Pasillo.objects.prefetch_related(
@@ -85,6 +87,37 @@ def cambiar_estado_implemento(request, implemento_id, box_id, nuevo_estado):
     
     return redirect('Implementos.html')
 
+def agenda(request):
+    fecha_seleccionada = request.GET.get('fecha', '')
+    mostrar_actuales = 'mostrar_actuales' in request.GET
+    
+    try:
+        fecha_filtro = date.fromisoformat(fecha_seleccionada) if fecha_seleccionada else date.today()
+    except ValueError:
+        fecha_filtro = date.today()
+    
+    consultas = Consulta.objects.select_related(
+        'rutmedico', 'rutpaciente', 'idbox'
+    ).filter(
+        fechaconsulta=fecha_filtro
+    ).order_by('horainicio')
+    
+    if mostrar_actuales:
+        hora_actual = timezone.now().time()
+        consultas = consultas.filter(horainicio__gte=hora_actual)
+    
+    hoy = date.today()
+    fechas = [hoy + timedelta(days=i) for i in range(-7, 8)]
+    
+    return render(request, 'agenda.html', {
+        'consultas': consultas,
+        'fecha_seleccionada': fecha_filtro,
+        'hoy': hoy,
+        'hora_actual': timezone.now().time(),
+        'mostrar_actuales': mostrar_actuales,
+        'fechas_disponibles': fechas
+    })
+
 def box_detail(request, box_id):
     box = get_object_or_404(Box, pk=box_id)
     especialidad = box.especialidadbox
@@ -137,9 +170,6 @@ def boxes(request):
 
 def panel_admin(request):
     return render(request, 'panel_admin.html')
-
-def agenda(request):
-    return render(request, 'agenda.html')
 
 def dashboard(request):
     return render(request, 'dashboard.html')

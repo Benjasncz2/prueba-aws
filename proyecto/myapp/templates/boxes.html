@@ -39,7 +39,7 @@
             
             <div class="boxes">
                 {% for box in item.boxes %}
-                    <a href="{% url 'box_detail' numeroBox %}" style="text-decoration: none;">
+                    <a href="{% url 'box_detail' box.idbox %}" style="text-decoration: none;">
                         <div class="box
                         {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
                         {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red

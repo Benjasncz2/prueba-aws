@@ -2,7 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse 
 from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento, Consulta, Paciente, Implemento
 from django.db import connection
-from django.db.models import Count, Q
+from django.db.models import Count, Q, Value, CharField
+from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
@@ -122,21 +123,49 @@ def box_detail(request, box_id):
     box = get_object_or_404(Box, pk=box_id)
     especialidad = box.especialidadbox
     estado = box.idestadobox.descripcionestadobox
-    
-    implementos = Implemento.objects.filter(
-        boximplemento__idbox=box.idbox
-    )
+    implementos = Implemento.objects.filter(boximplemento__idbox=box.idbox)
 
-    consultas = Consulta.objects.filter(idbox=box.idbox).select_related('rutmedico', 'rutpaciente')
+    fecha_filtro = request.GET.get('fecha', '')
+    medico_filtro = request.GET.get('medico', '')
+    
+    consultas = Consulta.objects.filter(idbox=box.idbox)
+
+    if fecha_filtro:
+        consultas = consultas.filter(fechaconsulta=fecha_filtro)
+    if medico_filtro:
+        # Normaliza espacios y busca por nombre completo en ambos órdenes
+        medico_filtro_normalizado = ' '.join(medico_filtro.split())
+        consultas = consultas.annotate(
+            medico_completo=Concat(
+                'rutmedico__nombremedico',
+                Value(' '),
+                'rutmedico__apellidomedico',
+                output_field=CharField()
+            ),
+            medico_completo_inv=Concat(
+                'rutmedico__apellidomedico',
+                Value(' '),
+                'rutmedico__nombremedico',
+                output_field=CharField()
+            )
+        ).filter(
+            Q(rutmedico__nombremedico__icontains=medico_filtro_normalizado) |
+            Q(rutmedico__apellidomedico__icontains=medico_filtro_normalizado) |
+            Q(medico_completo__icontains=medico_filtro_normalizado) |
+            Q(medico_completo_inv__icontains=medico_filtro_normalizado)
+        )
+
+    consultas = consultas.order_by('fechaconsulta', 'horainicio').select_related('rutmedico', 'rutpaciente')
 
     turnos = []
     for consulta in consultas:
+
         try:
-            medico = Medico.objects.get(rutmedico=consulta.rutmedico)
+            medico = consulta.rutmedico
             medico_nombre = f'{medico.nombremedico} {medico.apellidomedico}'
         except Medico.DoesNotExist:
             medico_nombre = 'Sin médico asignado'
-        
+
         try:
             paciente = Paciente.objects.get(rutpaciente=consulta.rutpaciente)
             paciente_nombre = f'{paciente.nombrepaciente} {paciente.apellidopaciente}'

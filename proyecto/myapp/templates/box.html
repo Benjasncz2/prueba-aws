@@ -10,16 +10,24 @@
 <div class="main-content">
     <div class="box-container">
         <h2 class="box-title">BOX N°{{ n_box }}</h2>
+
+        <form class="box-filter-form" method="get">
+            <input type="text" name="medico" placeholder="Filtrar por médico" value="{{ medico_filtro }}">
+            <input type="date" name="fecha" placeholder="Filtrar por fecha" value="{{ fecha_filtro }}">
+            <button type="submit">Filtrar</button>
+            <a href="?">Limpiar</a>
+        </form>
+
         <div class="box-info-layout">
             <div class="box-info">
                 <div class="info-card">
-                    <span class="info-icon">👁️</span>
+                    <span class="info-icon"><img src="{% static 'images/icono_especialidad.png' %}" /></span>
                     <div>
                         <strong>Especialidad:</strong> {{ especialidad }}
                     </div>
                 </div>
                 <div class="info-card">
-                    <span class="info-icon">✔️</span>
+                    <span class="info-icon"><img src="{% static 'images/checkmark_icon.png' %}" /></span>
                     <div>
                         <strong>Estado de Box:</strong> {{ estado }}
                     </div>
@@ -31,6 +39,8 @@
                         <ul>
                             {% for implemento in implementos %}
                             <li>{{ implemento.nombreImplemento }}</li>
+                            {% empty %} 
+                            <li>No hay implementos</li>
                             {% endfor %}
                         </ul>
                     </div>

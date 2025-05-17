@@ -7,7 +7,7 @@ from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 from django.utils import timezone
-from datetime import date, timedelta
+from datetime import date, timedelta, time, datetime
 
 def disponibilidad_boxes(request):
     pasillos = Pasillo.objects.prefetch_related(
@@ -201,8 +201,48 @@ def boxes(request):
 def panel_admin(request):
     return render(request, 'panel_admin.html')
 
+
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    total_boxes = Box.objects.count()
+    en_uso = Box.objects.filter(idestadobox=2).count()
+    disponibles = Box.objects.filter(idestadobox=1).count()
+    en_mantencion = Box.objects.filter(idestadobox=3).count()
+
+    porcentajes = {
+        'en_uso': round((en_uso / total_boxes * 100), 1) if total_boxes > 0 else 0,
+        'disponibles': round((disponibles / total_boxes * 100), 1) if total_boxes > 0 else 0,
+        'en_mantencion': round((en_mantencion / total_boxes * 100), 1) if total_boxes > 0 else 0,
+    }
+
+    
+    horas = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00', '12:30', '13:00', '13:30', '14:00','14:30','15:00','15:30', '16:00', '16:30', '17:00']
+    disponibilidad_por_hora = []
+    hoy = date.today()
+
+    for hora_str in horas:
+       
+        hora = datetime.strptime(hora_str, '%H:%M').time()
+        
+       
+        boxes_en_uso = Consulta.objects.filter(
+            fechaconsulta=hoy,
+            horainicio__lte=hora,
+            horafin__gte=hora
+        ).count()
+        
+        disponibles_hora = total_boxes - boxes_en_uso - en_mantencion
+        disponibilidad_por_hora.append(max(disponibles_hora, 0))
+
+    context = {
+        'total_boxes': total_boxes,
+        'en_uso': en_uso,
+        'disponibles': disponibles,
+        'en_mantencion': en_mantencion,
+        'porcentajes': porcentajes,
+        'horas': horas,
+        'disponibilidad_por_hora': disponibilidad_por_hora,
+    }
+    return render(request, 'dashboard.html', context)
 
 def box(request):
     return render(request, 'box.html')

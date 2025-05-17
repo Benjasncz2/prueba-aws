@@ -20,7 +20,7 @@
             <i class="bx bx-menu" id="btn"></i>
         </div>
         <div class="user">
-            <img src="{% static 'images/foto_perfil_image.png' %}" alt="me" class="user_img">
+            <img src="{% static 'images/avatar_perfil.jpg' %}" alt="me" class="user_img">
             <div>
                 <p class="bold">Elmer Figueroa</p>
                 <p>Admin</p>
@@ -133,3 +133,11 @@
     </footer>
 </body>
 </html>
+
+<script>
+    let btn =  document.querySelector('#btn')
+    let sidebar = document.querySelector('.sidebar')
+    btn.onclick = function (){
+        sidebar.classList.toggle('active');
+    };
+</script>

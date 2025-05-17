@@ -32,18 +32,20 @@
                         <strong>Estado de Box:</strong> {{ estado }}
                     </div>
                 </div>
-                <div class="info-card">
-                    <span class="info-icon">🛠️</span>
-                    <div>
-                        <strong>Implementos:</strong>
-                        <ul>
-                            {% for implemento in implementos %}
-                            <li>{{ implemento.nombreImplemento }}</li>
-                            {% empty %} 
-                            <li>No hay implementos</li>
-                            {% endfor %}
-                        </ul>
+                <div class="info-card info-card-implementos">
+                    <div class="implementos-header">
+                        <span class="info-icon">
+                            <img src="{% static 'images/icono_implementos2.png' %}"/>
+                        </span>
+                        <span class="implementos-titulo"><strong>Implementos:</strong></span>
                     </div>
+                    <ul class="implementos-list">
+                        {% for implemento in implementos %}
+                            <li>{{ implemento.nombreImplemento }}</li>
+                        {% empty %}
+                            <li>No hay implementos</li>
+                        {% endfor %}
+                    </ul>
                 </div>
             </div>
             <div class="box-table">

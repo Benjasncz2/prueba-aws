@@ -25,5 +25,7 @@ urlpatterns = [
     path('panel/', views.panel_admin),
     path('dashboard/', views.dashboard),
     path('personal/', views.personal),
-    path('agenda/', views.agenda)
+    path('agenda/', views.agenda),
+    path('implementos/', views.implementos),
+    path('cambiar_estado/<int:implemento_id>/<int:box_id>/<int:nuevo_estado>/',views.cambiar_estado_implemento,name='cambiar_estado')
 ]

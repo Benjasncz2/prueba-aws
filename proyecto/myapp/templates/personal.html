@@ -3,8 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal</title>
+    <title>Personal Médico</title>
     {% load static %}
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="{% static 'css/estilo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/estiloPersonal.css' %}">
 </head>
+
+<body>    
+    <div class="sidebar">
+        <div class="top">
+            <div class="logo">
+                <i class="bx bxs-book-content"></i>
+                <span>Menú</span>
+            </div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <div class="user">
+            <img src="{% static 'images/avatar_perfil.jpg' %}" alt="me" class="user_img">
+            <div>
+                <p class="bold">Elmer Figueroa</p>
+                <p>Admin</p>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="#" onclick="window.location.href='/agenda'">
+                    <i class="bx bxs-book-content"></i>
+                    <span class="nav-item">Agenda</span>
+                </a>
+                <span class="tooltip">Agenda</span>
+            </li>
+            <li>
+                <a href="#" onclick="window.location.href='/dashboard'">
+                    <i class="bx bx-line-chart"></i>
+                    <span class="nav-item">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li> 
+            <li>
+                <a href="#" onclick="window.location.href='/personal'">
+                    <i class="bx bx-group"></i>
+                    <span class="nav-item">Personal</span>
+                </a>
+                <span class="tooltip">Personal</span>
+            </li> 
+            <li>
+                <a href="#" onclick="window.location.href='/boxes'">
+                    <i class="bx bxs-door-open"></i>
+                    <span class="nav-item">Boxes</span>
+                </a>
+                <span class="tooltip">Boxes</span>
+            </li>
+            <li>
+                <a href="#" onclick="window.location.href='/implementos'">
+                    <i class="bx bx-injection"></i>
+                    <span class="nav-item">Implementos</span>
+                </a>
+                <span class="tooltip">Implementos</span>
+            </li> 
+        </ul>
+    </div>
+
+    <header class="main-header">
+        <div class="header-content">
+            <button class="inicio-btn" onclick="window.location.href='/panel'">Inicio</button>
+            <div class="logo-box">
+                <img src="{% static 'images/logo_hospital.png' %}" alt="Logo Hospital" class="hospital-logo">
+            </div>
+        </div>
+    </header>
+    
+    <div class="main-content">
+    <div class="titulo-content">
+        <h2>PERSONAL MÉDICO</h2>
+        
+        <div class="filtros-container">
+            <div class="form-busqueda">
+                <input type="text" 
+                       id="input-busqueda"
+                       placeholder="Buscar por nombre o apellido..."
+                       autocomplete="off">
+                <button type="button" id="btn-buscar">
+                    <i class='bx bx-search'></i>
+                </button>
+            </div>
+            
+            <form method="get" class="form-filtro">
+                <select name="especialidad" id="select-especialidad">
+                    <option value="">Todas las especialidades</option>
+                    {% for esp in especialidades %}
+                    <option value="{{ esp.idespecialidad }}"
+                            {% if especialidad_actual == esp.idespecialidad %}selected{% endif %}>
+                        {{ esp.nombreespecialidad }} ({{ esp.medico_set.count }})
+                    </option>
+                    {% endfor %}
+                </select>
+            </form>
+        </div>
+    </div>
+
+    <div class="medicos-container">
+        {% for medico in medicos %}
+        <div class="medico-card" data-especialidad="{{ medico.idespecialidad.idespecialidad|default:'' }}">
+            <div class="medico-avatar">
+                <img src="{% static 'images/avatares/'|add:medico.nombremedico|lower|add:'_'|add:medico.apellidomedico|lower|add:'.jpg' %}" 
+                     onerror="this.onerror=null; this.src='{% static 'images/avatar_default.jpg' %}'"
+                     alt="Foto de {{ medico.nombremedico }} {{ medico.apellidomedico }}">
+            </div>
+            <div class="medico-info">
+                <h3>Dr. {{ medico.nombremedico }} {{ medico.apellidomedico }}</h3>
+                {% if medico.idespecialidad %}
+                <p class="especialidad">{{ medico.idespecialidad.nombreespecialidad }}</p>
+                {% endif %}
+            </div>
+        </div>
+        {% empty %}
+        <div class="no-resultados">
+            <p>No hay médicos registrados</p>
+        </div>
+        {% endfor %}
+        
+        <div class="no-resultados" id="no-resultados-busqueda" style="display: none;">
+            <p id="mensaje-no-resultados"></p>
+            <a href="#" id="btn-reset">Mostrar todos</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="main_footer">
+        <div class="grupo1">
+            <div class="footer-item">
+                <figure>
+                    <a href="#">
+                        <img src="{% static 'images/logo_vesperdevs_fondoazul.png' %}" alt="Logo Vesperdevs">
+                    </a>
+                </figure>
+            </div>
+            <div class="footer-item">
+                <h2>SOBRE NOSOTROS</h2>
+                <p>En VesperDevs, somos un equipo de desarrolladores dedicados a crear soluciones innovadoras.</p>
+            </div>
+            <div class="footer-item">
+                <h2>CONTÁCTANOS</h2>
+                <p class="correos">
+                    be.sanchezt@udd.cl<br>
+                    a.pintos@udd.cl<br>
+                    b.pintof@udd.cl
+                </p>
+            </div>
+        </div>
+        <div class="grupo2">
+            <small>&copy; 2025 <b>VesperDevs</b> - Todos los Derechos Reservados.</small>
+        </div>
+    </div>
+</footer>
+
+<script>
+    let btn =  document.querySelector('#btn')
+    let sidebar = document.querySelector('.sidebar')
+    btn.onclick = function (){
+        sidebar.classList.toggle('active');
+    };
+
+document.addEventListener('DOMContentLoaded', function() {
+    const inputBusqueda = document.getElementById('input-busqueda');
+    const btnBuscar = document.getElementById('btn-buscar');
+    const selectEspecialidad = document.getElementById('select-especialidad');
+    const btnReset = document.getElementById('btn-reset');
+    const noResultsMsg = document.getElementById('no-resultados-busqueda');
+    const mensajeNoResults = document.getElementById('mensaje-no-resultados');
+    
+    function filtrarMedicos() {
+        const termino = inputBusqueda.value.toLowerCase().trim();
+        const especialidad = selectEspecialidad.value;
+        let resultadosVisibles = 0;
+        
+        document.querySelectorAll('.medico-card').forEach(card => {
+            const nombreCompleto = card.querySelector('h3').textContent.toLowerCase();
+            const cardEspecialidad = card.getAttribute('data-especialidad');
+            
+            const coincideBusqueda = termino === '' || nombreCompleto.includes(termino);
+            const coincideEspecialidad = especialidad === '' || cardEspecialidad === especialidad;
+            
+            if (coincideBusqueda && coincideEspecialidad) {
+                card.style.display = 'block';
+                resultadosVisibles++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        if (resultadosVisibles === 0) {
+            let mensaje = 'No se encontraron médicos';
+            if (termino !== '' || especialidad !== '') {
+                mensaje += ' con los filtros aplicados';
+                if (termino !== '') {
+                    mensaje += ` que coincidan con "${termino}"`;
+                }
+                if (especialidad !== '') {
+                    const especialidadNombre = selectEspecialidad.options[selectEspecialidad.selectedIndex].text.split(' (')[0];
+                    mensaje += ` en ${especialidadNombre}`;
+                }
+            }
+            
+            mensajeNoResults.textContent = mensaje;
+            noResultsMsg.style.display = 'block';
+        } else {
+            noResultsMsg.style.display = 'none';
+        }
+    }
+    
+    inputBusqueda.addEventListener('input', function() {
+        filtrarMedicos();
+    });
+    
+    btnBuscar.addEventListener('click', filtrarMedicos);
+    
+    selectEspecialidad.addEventListener('change', function() {
+        filtrarMedicos();
+    });
+    
+    btnReset.addEventListener('click', function(e) {
+        e.preventDefault();
+        inputBusqueda.value = '';
+        selectEspecialidad.value = '';
+        filtrarMedicos();
+    });
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.has('busqueda') || urlParams.has('especialidad')) {
+        if (urlParams.has('busqueda')) {
+            inputBusqueda.value = urlParams.get('busqueda');
+        }
+        if (urlParams.has('especialidad')) {
+            selectEspecialidad.value = urlParams.get('especialidad');
+        }
+        filtrarMedicos();
+    }
+});
+
+</script>

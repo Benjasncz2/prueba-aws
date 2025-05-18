@@ -12,13 +12,22 @@
 
   <div class="dashboard-cards">
     <div class="card uso">
-      BOXES EN USO: <br><span style="font-size: 2rem;">{{ en_uso }}</span>
+      <div class="card-content">
+        BOXES EN USO <br>
+        <span>{{ en_uso }}</span>
+      </div>
     </div>
     <div class="card disponibles">
-      BOXES DISPONIBLES: <br><span style="font-size: 2rem;">{{ disponibles }}</span>
+      <div class="card-content">
+        BOXES DISPONIBLES <br>
+        <span>{{ disponibles }}</span>
+      </div>
     </div>
-    <div class="card mantencion">
-      BOXES EN MANTENCIÓN: <br><span style="font-size: 2rem;">{{ en_mantencion }}</span>
+    <div class="card en mantencion">
+      <div class="card-content">
+        BOXES EN MANTENCIÓN <br>
+        <span>{{ en_mantencion }}</span>
+      </div>
     </div>
   </div>
 
@@ -41,6 +50,7 @@
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
+  // Gráfico de doughnut (ocupación)
   const ctx1 = document.getElementById('ocupacionChart').getContext('2d');
   new Chart(ctx1, {
     type: 'doughnut',
@@ -57,44 +67,149 @@
           {{ disponibles }}, 
           {{ en_mantencion }}
         ],
-        backgroundColor: ['#0097a7', '#9e9e9e', '#ffc107']
+        backgroundColor: [
+          'rgba(0, 188, 212, 0.8)',
+          'rgba(158, 158, 158, 0.8)',
+          'rgba(255, 193, 7, 0.8)'
+        ],
+        borderColor: [
+          'rgba(0, 188, 212, 1)',
+          'rgba(158, 158, 158, 1)',
+          'rgba(255, 193, 7, 1)'
+        ],
+        borderWidth: 2,
+        hoverOffset: 10,
+        hoverBackgroundColor: [
+          'rgba(0, 188, 212, 1)',
+          'rgba(158, 158, 158, 1)',
+          'rgba(255, 193, 7, 1)'
+        ]
       }]
     },
     options: {
       responsive: true,
-      cutout: '70%'
+      cutout: '70%',
+      plugins: {
+        legend: {
+          position: 'bottom',
+          labels: {
+            font: {
+              size: 12,
+              family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+            },
+            padding: 20,
+            usePointStyle: true,
+            pointStyle: 'circle'
+          }
+        },
+        tooltip: {
+          backgroundColor: 'rgba(0, 0, 0, 0.7)',
+          titleFont: { size: 14 },
+          bodyFont: { size: 12 },
+          padding: 12,
+          cornerRadius: 8,
+          displayColors: true,
+          callbacks: {
+            label: function(context) {
+              return `${context.label.split(':')[0]}: ${context.raw} (${context.label.split('(')[1]}`;
+            }
+          }
+        }
+      },
+      animation: {
+        animateScale: true,
+        animateRotate: true
+      }
     }
   });
 
+  // Gráfico de línea (disponibilidad)
   const ctx2 = document.getElementById('disponibilidadChart').getContext('2d');
-new Chart(ctx2, {
+  new Chart(ctx2, {
     type: 'line',
     data: {
         labels: {{ horas|safe }},
         datasets: [{
-            label: 'Boxes disponibles',
+            label: 'Boxes disponibles por hora',
             data: {{ disponibilidad_por_hora }},
-            fill: false,
-            borderColor: '#0097a7',
+            fill: true,
+            backgroundColor: 'rgba(0, 188, 212, 0.1)',
+            borderColor: '#00bcd4',
+            borderWidth: 3,
             tension: 0.3,
-            pointBackgroundColor: '#0097a7'
+            pointBackgroundColor: '#00bcd4',
+            pointRadius: 5,
+            pointHoverRadius: 8,
+            pointBorderColor: '#fff',
+            pointBorderWidth: 2,
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#00bcd4',
+            pointHoverBorderWidth: 2
         }]
     },
     options: {
         responsive: true,
+        maintainAspectRatio: true,
         scales: {
             y: {
                 beginAtZero: true,
-                max: {{ total_boxes }}  // El máximo será el total de boxes
+                max: {{ total_boxes }},
+                grid: {
+                    color: 'rgba(0, 0, 0, 0.05)',
+                    drawBorder: false
+                },
+                ticks: {
+                    font: {
+                        family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                    }
+                }
+            },
+            x: {
+                grid: {
+                    display: false,
+                    drawBorder: false
+                },
+                ticks: {
+                    font: {
+                        family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                    }
+                }
             }
         },
         plugins: {
+            legend: {
+                display: true,
+                position: 'top',
+                labels: {
+                    font: {
+                        size: 12,
+                        family: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"
+                    },
+                    usePointStyle: true,
+                    pointStyle: 'circle'
+                }
+            },
             tooltip: {
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                titleFont: { size: 14 },
+                bodyFont: { size: 12 },
+                padding: 12,
+                cornerRadius: 8,
+                displayColors: false,
                 callbacks: {
                     label: function(context) {
                         return `${context.dataset.label}: ${context.raw}`;
                     }
                 }
+            }
+        },
+        interaction: {
+            intersect: false,
+            mode: 'index'
+        },
+        elements: {
+            line: {
+                cubicInterpolationMode: 'monotone'
             }
         }
     }

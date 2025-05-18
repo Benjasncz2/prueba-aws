@@ -1,117 +1,150 @@
+/* ESTILOS GENERALES */
+.main-content {
+  position: relative;
+  background-color: #f5f7fa;
+  min-height: 100vh;
+  top: 0;
+  left: 80px;
+  transition: all 0.5s ease;
+  width: calc(100% - 80px);
+  padding: 2rem;
+}
+
+/* HEADER */
 .dashboard-header {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #37527a;
-  margin-bottom: 20px;
+  color: #2c3e50;
+  margin-bottom: 2rem;
 }
 
+/* TARJETAS CON FRANJA LATERAL */
 .dashboard-cards {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
-  margin-bottom: 20px;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .card {
   flex: 1;
-  padding: 1rem;
-  border-radius: 10px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+  min-width: 250px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card.uso {
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+}
+
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+}
+
+.card.uso::after {
   background-color: #00bcd4;
 }
 
-.card.disponibles {
+.card.disponibles::after {
   background-color: #9e9e9e;
 }
 
-.card.mantencion {
+.card.mantencion::after {
   background-color: #ffc107;
-  color: black;
 }
 
+.card-content {
+  padding: 1.5rem;
+  color: #333;
+  text-align: center; /* Añadido para centrar el texto */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrado horizontal para elementos flex */
+}
+
+.card-content span {
+  display: block;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  color: #2c3e50;
+  width: 100%;
+}
+
+/* GRÁFICOS */
 .dashboard-graphics {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .chart-container {
-  background-color: #e3f2fd;
-  border-radius: 10px;
-  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  padding: 1.5rem;
   flex: 1;
+  box-shadow: 0 2px 15px rgba(0,0,0,0.08);
 }
 
-.chart-container canvas {
+.chart-container h4 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .main-content {
+    left: 0;
+    width: 100%;
+    padding: 1.5rem;
+  }
+  
+  .dashboard-cards {
+    flex-direction: column;
+  }
+  
+  .card {
+    min-width: 100%;
+  }
+}
+
+/* Mejoras para los contenedores de gráficos */
+.chart-container {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
+}
+
+.chart-container:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0,0,0,0.1);
+}
+
+.chart-container h4 {
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+/* Ajuste de tamaño para gráficos */
+canvas {
   width: 100% !important;
   height: auto !important;
-}
-
-.main-content {
-  position: relative;
-  background-color: #eee;
-  min-height: 100vh;
-  top: 0;
-  left: 80px;
-  transition: all 0.5s ease;
-  width: calc(100% - 80px);
-  padding: 1rem;
-}
-
-.container{
-  display: flex;
-  justify-content: space-between;
-}
-
-/* VISUALIZACIONES EPICAS DE DOCTORES */
-
-.main-content {
-  position: relative;
-  background-color: #eee;
-  min-height: 100vh;
-  top: 0;
-  left: 80px;
-  transition: all 0.5s ease;
-  width: calc(100% - 80px);
-  padding: 1rem;
-}
-
-.titulo-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 1.5rem 0;
-  padding: 0 1rem;
-  gap: 1rem;
-  color: #122138;
-}
-
-.titulo-content h2 {
-  font-size: 2rem;
-  flex: 1 1 200px;
-  word-break: break-word;
-}
-/*TODO LO DEL TITULO Y EL BOTON DE FILTRAR */
-
-.titulo-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  margin: 1.5rem 0;
-  padding: 0 1rem;
-  gap: 1rem;
-  color: #122138;
-}
-
-.titulo-content h2 {
-  font-size: 2rem;
-  flex: 1 1 200px;
-  word-break: break-word;
+  max-height: 300px;
 }

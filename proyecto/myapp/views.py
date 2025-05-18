@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse 
 from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento, Consulta, Paciente, Implemento
 from django.db import connection
-from django.db.models import Count, Q, Value, CharField
+from django.db.models import Count, Q, Value, CharField, Case, When, IntegerField
 from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
@@ -229,7 +229,48 @@ def box_detail(request, box_id):
     return render(request, 'box.html', context)
 
 def implementos(request):
-    return render(request, 'Implementos.html')
+    implementos_data = Boximplemento.objects.values(
+        'idimplemento',
+        'idimplemento__nombreimplemento'
+    ).annotate(
+        total=Count('idimplemento'),
+        disponible=Count(
+            Case(
+                When(idestadoimplemento__descripcion='Disponible', then=1),
+                output_field=IntegerField()
+            )
+        ),
+        reparacion=Count(
+            Case(
+                When(idestadoimplemento__descripcion='En reparación', then=1),
+                output_field=IntegerField()
+            )
+        ),
+        fuera_servicio=Count(
+            Case(
+                When(idestadoimplemento__descripcion='Fuera de servicio', then=1),
+                output_field=IntegerField()
+            )
+        )
+    ).order_by('idimplemento__nombreimplemento')
+
+    implementos_dict = {
+        item['idimplemento']: {
+            'nombre': item['idimplemento__nombreimplemento'],
+            'total': item['total'],
+            'disponible': item['disponible'],
+            'reparacion': item['reparacion'],
+            'fuera_servicio': item['fuera_servicio']
+        }
+        for item in implementos_data
+    }
+
+    context = {
+        'implementos': implementos_dict,
+        'total_implementos': len(implementos_dict)
+    }
+    
+    return render(request, 'implementos.html', context)
 
 def login(request):
     return render(request, 'login.html')

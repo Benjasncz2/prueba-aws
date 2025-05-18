@@ -31,64 +31,70 @@
             </div>
         </div>
         
-        {% for item in pasillos_data %}
-        <div class="pasillo">
-            <div class="pasillo-header" onclick="toggleBoxes(this)">
-                {{ item.pasillo.nombrepasillo }} -  Boxes Disponibles: {{ item.disponibles }} ▼
+        <!-- Contenedor para los pasillos -->
+        <div class="pasillos-container">
+            {% for item in pasillos_data %}
+            <div class="pasillo">
+                <div class="pasillo-header" onclick="toggleBoxes(this)">
+                    {{ item.pasillo.nombrepasillo }} -  Boxes Disponibles: {{ item.disponibles }} ▼
+                </div>
+                
+                <div class="boxes">
+                    {% for box in item.boxes %}
+                        <a href="{% url 'box_detail' box.idbox %}" style="text-decoration: none;">
+                            <div class="box">
+                                <div class="box-number">Box {{ box.numerobox }}</div>
+                                <div class="status-indicator 
+                                    {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
+                                    {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
+                                    {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
+                                    {% else %} purple
+                                    {% endif %}">
+                                </div>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <p>No hay boxes en este pasillo.</p>
+                    {% endfor %}
+                </div>
             </div>
-            
-            <div class="boxes">
-                {% for box in item.boxes %}
-                    <a href="{% url 'box_detail' box.idbox %}" style="text-decoration: none;">
-                        <div class="box
-                        {% if box.idestadobox.descripcionestadobox == 'Disponible' %} gray
-                        {% elif box.idestadobox.descripcionestadobox == 'No disponible' %} red
-                        {% elif box.idestadobox.descripcionestadobox == 'En mantención' %} yellow
-                        {% else %} purple
-                        {% endif %}">
-                        Box {{ box.numerobox }}
-                        </div>
-                    </a>
-                {% empty %}
-                    <p>No hay boxes en este pasillo.</p>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
     </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
     function toggleBoxes(header) {
-    const boxes = header.nextElementSibling;
-    boxes.classList.toggle('hidden');
-    header.textContent = header.textContent.includes('▲')
-      ? header.textContent.replace('▲', '▼')
-      : header.textContent.replace('▼', '▲');
-  }
+        const boxes = header.nextElementSibling;
+        boxes.classList.toggle('hidden');
+        header.textContent = header.textContent.includes('▲')
+          ? header.textContent.replace('▲', '▼')
+          : header.textContent.replace('▼', '▲');
+    }
 
-  function toggleFiltro() {
+    function toggleFiltro() {
         const dropdown = document.querySelector('.dropdown-filtro');
         dropdown.classList.toggle('hidden');
     }
 
     function filtrarBoxes(filtro) {
-    const boxes = document.querySelectorAll('.box');
+        const boxes = document.querySelectorAll('.box');
 
-    boxes.forEach(box => {
-        const classes = box.classList;
-        const visible = (
-            (filtro === 'Disponible' && classes.contains('gray')) ||
-            (filtro === 'Ocupado' && classes.contains('red')) ||
-            (filtro === 'En mantención' && classes.contains('yellow')) ||
-            (filtro === 'Todos')
-        );
+        boxes.forEach(box => {
+            const statusIndicator = box.querySelector('.status-indicator');
+            const classes = statusIndicator.classList;
+            const visible = (
+                (filtro === 'Disponible' && classes.contains('gray')) ||
+                (filtro === 'Ocupado' && classes.contains('red')) ||
+                (filtro === 'En mantención' && classes.contains('yellow')) ||
+                (filtro === 'Todos')
+            );
 
-        box.style.display = visible ? 'block' : 'none';
-    });
+            box.style.display = visible ? 'flex' : 'none';
+        });
 
-    toggleFiltro(); 
-}
+        toggleFiltro(); 
+    }
 </script>
 {% endblock %}

@@ -1,3 +1,4 @@
+/* Estilos base */
 .main-content {
     position: relative;
     background-color: #eee;
@@ -9,30 +10,29 @@
     padding: 1rem;
 }
 
-.container{
+/* Contenedor de pasillos */
+.pasillos-container {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
 
-/* VISUALIZACION DE LOS BOXES TO PRO */
-
+/* Estilos del pasillo */
 .pasillo {
     margin-bottom: 1rem;
     background: transparent;
     padding: 1rem;
     border-radius: 10px;
-    border: 2px solid rgba(0, 0, 0, 0.2); 
+    border: 2px solid rgba(0, 0, 0, 0.2);
     transition: background-color 0.3s ease, border-color 0.3s ease;
+    flex: 1 1 calc(50% - 1rem);
+    box-sizing: border-box;
+    min-width: 300px;
 }
 
 .pasillo:hover {
     background-color: #b4f1e965;
     border-color: #000000;
-}
-
-.pasillo {
-    position: relative; 
-    z-index: 10;
 }
 
 .pasillo-header {
@@ -44,50 +44,77 @@
     align-items: center;
 }
 
+/* VISUALIZACION DE LOS BOXES TO PRO */
 .boxes {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     margin-top: 1rem;
-  }
+}
 
 .box {
     padding: 1rem;
     border-radius: 10px;
     min-width: 80px;
     text-align: center;
-    color: white;
+    color: black;
     font-weight: bold;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     transition: transform 0.2s ease;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    height: 80px;
 }
 
 .box:hover {
     transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.box-number {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.status-indicator {
+    width: 100%;
+    height: 8px;
+    border-radius: 4px;
+    margin-top: 8px;
 }
 
 /* Colores según estado */
 .gray {
-    background-color: #a9a9a9c7; 
-    color: #000000da;
+    background-color: #a9a9a9c7;
 }
 
 .red {
-    background-color: #58c6c2; 
-    color: #000000da;
+    background-color: #58c6c2;
 }
 
 .yellow {
-    background-color: #ffc928d8; 
-    color: #000000da; /* pa ke se vea mejor en el amarillo */
+    background-color: #ffc928d8;
 }
 
 .purple {
-    background-color: #b405e9de; 
+    background-color: #b405e9de;
 }
 
-/*TODO LO DEL TITULO Y EL BOTON DE FILTRAR */
+@media (max-width: 768px) {
+    .pasillo {
+        flex: 1 1 100%;
+    }
+    
+    .main-content {
+        left: 0;
+        width: 100%;
+    }
+}
 
+/* Estilos del título y filtros */
 .titulo-content {
     display: flex;
     justify-content: space-between;
@@ -99,30 +126,29 @@
 }
 
 .titulo-content h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     flex: 1 1 200px;
     word-break: break-word;
-    color: #37527a;
 }
 
 .filtrar-btn {
     padding: 1rem 1.5rem;
-    background-color: #ffffffcb;
-    color: rgb(0, 0, 0);
+    background-color: #05b5af;
+    color: white;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
-    transition: background 0.3s ease ;
+    transition: background 0.3s ease;
 }
 
 .filtrar-btn:hover {
-    background-color: #b4f1e9;
+    background-color: #048a85;
 }
 
 .filtrar-wrapper {
     position: relative;
-    display: inline-block; /* o block, si es necesario */;
+    display: inline-block;
 }
 
 .dropdown-filtro {
@@ -185,8 +211,7 @@
 .color-circulo.red { background-color: #05b5af; }
 .color-circulo.yellow { background-color: #ffc107b7; }
 
-
-/*card pro*/
+/* Estilos de la tarjeta de disponibles */
 .card-disponibles {
     background-color: #f0f4f8;
     border-left: 4px solid #05b5af;

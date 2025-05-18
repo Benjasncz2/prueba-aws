@@ -1,0 +1,53 @@
+.box-filtros {
+    border: 1px solid #cce3ea;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.selector-fecha {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.selector-fecha label {
+    font-weight: 500;
+    color: #37527a;
+}
+
+.selector-fecha input[type="date"] {
+    padding: 0.6rem 1rem;
+    border: 2px solid #05b5af;
+    border-radius: 25px;
+    font-size: 0.95rem;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.selector-fecha input[type="date"]:hover {
+    box-shadow: 0 0 8px rgba(5, 181, 175, 0.2);
+}
+
+.hora-actual {
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 0.7rem 1.2rem;
+    border-radius: 25px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.hora-actual span {
+    font-weight: bold;
+    color: #05b5af;
+}
+
+

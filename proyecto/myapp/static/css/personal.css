@@ -35,13 +35,14 @@
     margin: 1.5rem 0;
     padding: 0 1rem;
     gap: 1rem;
-    color: #122138;
 }
 
 .titulo-content h2 {
     font-size: 2rem;
     flex: 1 1 200px;
     word-break: break-word;
+    color: #37527a;
+    margin: 0 0 0 4px;
 }
 
 .filtros-container {

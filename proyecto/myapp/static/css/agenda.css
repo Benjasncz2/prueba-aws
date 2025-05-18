@@ -23,6 +23,7 @@
 }
 
 .controles-agenda {
+    border: 1px solid #cce3ea;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -271,7 +272,6 @@
 
 .filtros-busqueda {
     flex-grow: 1;
-    margin: 0 1.5rem;
 }
 
 .form-filtros {
@@ -310,7 +310,7 @@
 }
 
 .btn-filtrar {
-    padding: 0.6rem 1.2rem;
+    padding: 0.55rem 1.2rem;
     background-color: #05b5af;
     color: white;
     border: none;
@@ -321,6 +321,11 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s;
+    font-size: 1.2rem;
+}
+
+.btn-filtrar i {
+    font-size: 1.2rem;
 }
 
 .btn-filtrar:hover {

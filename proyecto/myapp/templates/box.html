@@ -4,6 +4,7 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/box.css' %}">
+<link rel="stylesheet" href="{% static 'css/agenda.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -11,12 +12,54 @@
     <div class="box-container">
         <h2 class="box-title">BOX N°{{ n_box }}</h2>
 
-        <form class="box-filter-form" method="get">
-            <input type="text" name="medico" placeholder="Filtrar por médico" value="{{ medico_filtro }}">
-            <input type="date" name="fecha" placeholder="Filtrar por fecha" value="{{ fecha_filtro }}">
-            <button type="submit">Filtrar</button>
-            <a href="?">Limpiar</a>
-        </form>
+        <div class="controles-agenda">
+            <div class="selector-fecha">
+                <form method="get" class="form-fecha">
+                    <label for="input-fecha">Seleccionar fecha:</label>
+                    <input type="date" 
+                            id="input-fecha"
+                            name="fecha"
+                            value="{{ fecha_seleccionada|date:'Y-m-d' }}"
+                            min="{{ hoy|date:'Y-m-d' }}"
+                            max="{{ hoy|date:'Y-m-d'|add:'+3 months' }}"
+                            onchange="this.form.submit()"
+                            style="margin: 0 0 0 4px;">
+                </form>
+            </div>
+            
+            <div class="filtros-busqueda">
+                <form method="get" class="form-filtros">
+                    <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
+                    <div class="filtro-group">
+                        <i class='bx bx-search'></i>
+                        <input type="text" 
+                                name="medico" 
+                                placeholder="Buscar médico..." 
+                                value="{{ request.GET.medico }}"
+                                class="input-filtro">
+                    </div>
+                    
+                    <div class="filtro-group">
+                        <i class='bx bx-search'></i>
+                        <input type="text" 
+                                name="paciente" 
+                                placeholder="Buscar paciente..." 
+                                value="{{ request.GET.paciente }}"
+                                class="input-filtro">
+                    </div>
+                    
+                    <button type="submit" class="btn-filtrar">
+                        <i class='bx bx-filter-alt'></i> Filtrar
+                    </button>
+                    
+                    {% if request.GET.medico or request.GET.paciente %}
+                    <a href="?fecha={{ fecha_seleccionada|date:'Y-m-d' }}" class="btn-limpiar">
+                        <i class='bx bx-x'></i> Limpiar
+                    </a>
+                    {% endif %}
+                </form>
+            </div>   
+        </div>
 
         <div class="box-info-layout">
             <div class="box-info">

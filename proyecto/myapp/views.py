@@ -141,11 +141,11 @@ def box_detail(request, box_id):
     box = get_object_or_404(Box, pk=box_id)
     especialidad = box.especialidadbox
     estado = box.idestadobox.descripcionestadobox
-    
     implementos = Implemento.objects.filter(boximplemento__idbox=box.idbox).values_list('nombreimplemento', flat=True)
 
     fecha_filtro = request.GET.get('fecha', '')
     medico_filtro = request.GET.get('medico', '')
+    paciente_filtro = request.GET.get('paciente', '')
     
     consultas = Consulta.objects.filter(idbox=box.idbox)
 
@@ -173,6 +173,27 @@ def box_detail(request, box_id):
             Q(medico_completo__icontains=medico_filtro_normalizado) |
             Q(medico_completo_inv__icontains=medico_filtro_normalizado)
         )
+    if paciente_filtro:
+        paciente_filtro_normalizado = ' '.join(paciente_filtro.split())
+        consultas = consultas.annotate(
+            paciente_completo=Concat(
+                'rutpaciente__nombrepaciente',
+                Value(' '),
+                'rutpaciente__apellidopaciente',
+                output_field=CharField()
+            ),
+            paciente_completo_inv=Concat(
+                'rutpaciente__apellidopaciente',
+                Value(' '),
+                'rutpaciente__nombrepaciente',
+                output_field=CharField()
+            )
+        ).filter(
+            Q(rutpaciente__nombrepaciente__icontains=paciente_filtro_normalizado) |
+            Q(rutpaciente__apellidopaciente__icontains=paciente_filtro_normalizado) |
+            Q(paciente_completo__icontains=paciente_filtro_normalizado) |
+            Q(paciente_completo_inv__icontains=paciente_filtro_normalizado)
+        )
 
     consultas = consultas.order_by('fechaconsulta', 'horainicio').select_related('rutmedico', 'rutpaciente')
 
@@ -186,7 +207,7 @@ def box_detail(request, box_id):
             medico_nombre = 'Sin médico asignado'
 
         try:
-            paciente = Paciente.objects.get(rutpaciente=consulta.rutpaciente)
+            paciente = consulta.rutpaciente
             paciente_nombre = f'{paciente.nombrepaciente} {paciente.apellidopaciente}'
         except Paciente.DoesNotExist:
             paciente_nombre = 'Sin paciente asignado'

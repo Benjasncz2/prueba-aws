@@ -15,19 +15,27 @@
     gap: 1rem;
 }
 
+.box-actions {
+    display: flex;
+    align-items: center;
+    margin: 1rem 1rem 1rem 0;
+    gap: 1rem;
+}
+
 .all-boxes-btn {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: #58c6c2;
+    background: #05b5af;
     color: white !important;
     border-radius: 6px;
     text-decoration: none;
     font-weight: bold;
     transition: background 0.2s;
+    font-size: 1rem;
 }
 
 .all-boxes-btn:hover {
-    background: #28a09c;
+    background: #048a85;
     text-decoration: none;
 }
 
@@ -41,7 +49,7 @@
     font-size: 2.5rem;
     font-weight: bold;
     color: #37527a;
-    margin: 0.5rem 0 1.5rem 2px;
+    margin: 0 0 4px 0;
 }
 
 /* ====== Cards ======= */
@@ -202,18 +210,4 @@
     background: #048a85;
     text-decoration: none;
     transform: translateY(-2px);
-}
-
-.box-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1.5rem 1rem 2rem 0;
-}
-
-.box-actions {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 1.5rem 1rem 2rem 0;
 }

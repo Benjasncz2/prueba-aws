@@ -283,6 +283,10 @@ def panel_admin(request):
 
 
 def dashboard(request):
+    # Siempre usar la fecha actual
+    hoy = date.today()
+    
+    # Datos de disponibilidad de boxes
     total_boxes = Box.objects.count()
     en_uso = Box.objects.filter(idestadobox=2).count()
     disponibles = Box.objects.filter(idestadobox=1).count()
@@ -294,24 +298,30 @@ def dashboard(request):
         'en_mantencion': round((en_mantencion / total_boxes * 100), 1) if total_boxes > 0 else 0,
     }
 
-    
-    horas = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00', '12:30', '13:00', '13:30', '14:00','14:30','15:00','15:30', '16:00', '16:30', '17:00']
+    # Disponibilidad por hora (solo para hoy)
+    horas = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00', 
+             '12:30', '13:00', '13:30', '14:00','14:30','15:00','15:30', '16:00', '16:30', '17:00']
     disponibilidad_por_hora = []
-    hoy = date.today()
-
+    
     for hora_str in horas:
-       
         hora = datetime.strptime(hora_str, '%H:%M').time()
-        
-       
         boxes_en_uso = Consulta.objects.filter(
             fechaconsulta=hoy,
             horainicio__lte=hora,
             horafin__gte=hora
         ).count()
-        
         disponibles_hora = total_boxes - boxes_en_uso - en_mantencion
         disponibilidad_por_hora.append(max(disponibles_hora, 0))
+
+    # Especialidades más demandadas (solo para hoy)
+    especialidades_demandadas = Consulta.objects.filter(fechaconsulta=hoy).values(
+        'rutmedico__idespecialidad__nombreespecialidad'
+    ).annotate(
+        total=Count('idconsulta')
+    ).order_by('-total')[:5]
+
+    labels_especialidades = [e['rutmedico__idespecialidad__nombreespecialidad'] for e in especialidades_demandadas]
+    data_especialidades = [e['total'] for e in especialidades_demandadas]
 
     context = {
         'total_boxes': total_boxes,
@@ -321,6 +331,8 @@ def dashboard(request):
         'porcentajes': porcentajes,
         'horas': horas,
         'disponibilidad_por_hora': disponibilidad_por_hora,
+        'labels_especialidades': labels_especialidades,
+        'data_especialidades': data_especialidades,
     }
     return render(request, 'dashboard.html', context)
 

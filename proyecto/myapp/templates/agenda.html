@@ -2,6 +2,7 @@
 {% load static %}
 {% block title %}Agenda Médica{% endblock %}
 {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/filtros.css' %}">
 <link rel="stylesheet" href="{% static 'css/agenda.css' %}">
 <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 {% endblock %}
@@ -9,13 +10,15 @@
 {% block content %}    
     <div class="main-content">
         <div class="titulo-content">
-            <h2>AGENDA MÉDICA</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h2 style="justify-content: flex-start;">AGENDA MÉDICA</h2>
+                <span class="hora-actual" style="font-weight: bold; color: #05b5af;">Hora: {{ hora_actual|time:"H:i" }}</span>
+            </div>
             
-            <div class="controles-agenda">
+            <div class="filtros-card">
                 <div class="selector-fecha">
                     <form method="get" class="form-fecha">
-                        <label for="input-fecha">Seleccionar fecha:</label>
-                        <input type="date" 
+                        <input type="date"
                                id="input-fecha"
                                name="fecha"
                                value="{{ fecha_seleccionada|date:'Y-m-d' }}"
@@ -58,26 +61,22 @@
                         {% endif %}
                     </form>
                 </div>
-                
-                <div class="hora-actual">
-                    <span>Hora: {{ hora_actual|time:"H:i" }}</span>
-                    <form method="get" class="form-proximas">
-                        <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
-                        <input type="hidden" name="medico" value="{{ request.GET.medico }}">
-                        <input type="hidden" name="paciente" value="{{ request.GET.paciente }}">
-                        <input type="hidden" name="mostrar_actuales" value="true">
-                        <button type="submit" class="btn-actuales {% if mostrar_actuales %}activo{% endif %}">
-                            <i class='bx bx-time'></i> Ver próximas
-                        </button>
-                    </form>
-                </div>
+                <form method="get" class="form-proximas">
+                    <input type="hidden" name="fecha" value="{{ fecha_seleccionada|date:'Y-m-d' }}">
+                    <input type="hidden" name="medico" value="{{ request.GET.medico }}">
+                    <input type="hidden" name="paciente" value="{{ request.GET.paciente }}">
+                    <input type="hidden" name="mostrar_actuales" value="true">
+                    <button type="submit" class="btn-actuales {% if mostrar_actuales %}activo{% endif %}">
+                        <i class='bx bx-time' style="font-size: 1.2rem;"></i> Ver próximas
+                    </button>
+                </form>
             </div>
         </div>
         <div class="tabla-container">
             <div class="tabla-scroll">
                 <table class="tabla-agenda">
                     <thead>
-                        <tr>
+                        <tr style="letter-spacing: 0.15em;">
                             <th style="width: 15%;">Hora</th>
                             <th style="width: 20%;">Box</th>
                             <th style="width: 25%;">Médico</th>

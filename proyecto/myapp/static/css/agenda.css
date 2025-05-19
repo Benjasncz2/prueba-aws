@@ -75,7 +75,7 @@
 }
 
 .form-proximas {
-    margin-left: 1rem;
+    margin-left: 0;
 }
 
 .btn-actuales {
@@ -316,7 +316,7 @@
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 250;
     display: flex;
     align-items: center;
     gap: 0.5rem;

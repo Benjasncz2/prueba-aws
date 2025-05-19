@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse 
 from .models import Pasillo, Box, Estadobox, Medico, Especialidad, Boximplemento, Consulta, Paciente, Implemento
 from django.db import connection
-from django.db.models import Count, Q, Value, CharField
+from django.db.models import Count, Q, Value, CharField, Case, When, IntegerField
 from django.db.models.functions import Concat
 from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
@@ -229,7 +229,48 @@ def box_detail(request, box_id):
     return render(request, 'box.html', context)
 
 def implementos(request):
-    return render(request, 'Implementos.html')
+    implementos_data = Boximplemento.objects.values(
+        'idimplemento',
+        'idimplemento__nombreimplemento'
+    ).annotate(
+        total=Count('idimplemento'),
+        disponible=Count(
+            Case(
+                When(idestadoimplemento__descripcion='Disponible', then=1),
+                output_field=IntegerField()
+            )
+        ),
+        reparacion=Count(
+            Case(
+                When(idestadoimplemento__descripcion='En reparación', then=1),
+                output_field=IntegerField()
+            )
+        ),
+        fuera_servicio=Count(
+            Case(
+                When(idestadoimplemento__descripcion='Fuera de servicio', then=1),
+                output_field=IntegerField()
+            )
+        )
+    ).order_by('idimplemento__nombreimplemento')
+
+    implementos_dict = {
+        item['idimplemento']: {
+            'nombre': item['idimplemento__nombreimplemento'],
+            'total': item['total'],
+            'disponible': item['disponible'],
+            'reparacion': item['reparacion'],
+            'fuera_servicio': item['fuera_servicio']
+        }
+        for item in implementos_data
+    }
+
+    context = {
+        'implementos': implementos_dict,
+        'total_implementos': len(implementos_dict)
+    }
+    
+    return render(request, 'implementos.html', context)
 
 def login(request):
     return render(request, 'login.html')
@@ -242,6 +283,10 @@ def panel_admin(request):
 
 
 def dashboard(request):
+    # Siempre usar la fecha actual
+    hoy = date.today()
+    
+    # Datos de disponibilidad de boxes
     total_boxes = Box.objects.count()
     en_uso = Box.objects.filter(idestadobox=2).count()
     disponibles = Box.objects.filter(idestadobox=1).count()
@@ -253,24 +298,30 @@ def dashboard(request):
         'en_mantencion': round((en_mantencion / total_boxes * 100), 1) if total_boxes > 0 else 0,
     }
 
-    
-    horas = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00', '12:30', '13:00', '13:30', '14:00','14:30','15:00','15:30', '16:00', '16:30', '17:00']
+    # Disponibilidad por hora (solo para hoy)
+    horas = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00', 
+             '12:30', '13:00', '13:30', '14:00','14:30','15:00','15:30', '16:00', '16:30', '17:00']
     disponibilidad_por_hora = []
-    hoy = date.today()
-
+    
     for hora_str in horas:
-       
         hora = datetime.strptime(hora_str, '%H:%M').time()
-        
-       
         boxes_en_uso = Consulta.objects.filter(
             fechaconsulta=hoy,
             horainicio__lte=hora,
             horafin__gte=hora
         ).count()
-        
         disponibles_hora = total_boxes - boxes_en_uso - en_mantencion
         disponibilidad_por_hora.append(max(disponibles_hora, 0))
+
+    # Especialidades más demandadas (solo para hoy)
+    especialidades_demandadas = Consulta.objects.filter(fechaconsulta=hoy).values(
+        'rutmedico__idespecialidad__nombreespecialidad'
+    ).annotate(
+        total=Count('idconsulta')
+    ).order_by('-total')[:5]
+
+    labels_especialidades = [e['rutmedico__idespecialidad__nombreespecialidad'] for e in especialidades_demandadas]
+    data_especialidades = [e['total'] for e in especialidades_demandadas]
 
     context = {
         'total_boxes': total_boxes,
@@ -280,6 +331,8 @@ def dashboard(request):
         'porcentajes': porcentajes,
         'horas': horas,
         'disponibilidad_por_hora': disponibilidad_por_hora,
+        'labels_especialidades': labels_especialidades,
+        'data_especialidades': data_especialidades,
     }
     return render(request, 'dashboard.html', context)
 

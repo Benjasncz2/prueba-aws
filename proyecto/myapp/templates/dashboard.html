@@ -4,6 +4,7 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/chart.js" />
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 {% endblock %}
 
 {% block content %}
@@ -23,7 +24,7 @@
         <span>{{ disponibles }}</span>
       </div>
     </div>
-    <div class="card en mantencion">
+    <div class="card mantencion">
       <div class="card-content">
         BOXES EN MANTENCIÓN <br>
         <span>{{ en_mantencion }}</span>
@@ -33,13 +34,22 @@
 
   <div class="dashboard-graphics">
     <div class="chart-container" style="max-width: 400px;">
-      <h4 style="text-align: center;">Porcentaje de Ocupación de Boxes</h4>
+      <h4>Porcentaje de Ocupación de Boxes - Hoy</h4>
       <canvas id="ocupacionChart"></canvas>
-      <p style="text-align:center; font-weight:bold;">Porcentaje de Boxes Disponibles: 28%</p>
+      <p style="text-align:center; font-weight:bold;">
+        Porcentaje de Boxes Disponibles: {{ porcentajes.disponibles }}%
+      </p>
     </div>
 
     <div class="chart-container">
-      <h4 style="text-align: center;">Disponibilidad de Boxes del Día</h4>
+      <h4>Especialidades más demandadas - Hoy</h4>
+      <canvas id="especialidadesChart"></canvas>
+    </div>
+  </div>
+
+  <div class="dashboard-graphics">
+    <div class="chart-container">
+      <h4>Disponibilidad de Boxes - Hoy</h4>
       <canvas id="disponibilidadChart"></canvas>
     </div>
   </div>
@@ -50,7 +60,6 @@
 {% block extra_js %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-  // Gráfico de doughnut (ocupación)
   const ctx1 = document.getElementById('ocupacionChart').getContext('2d');
   new Chart(ctx1, {
     type: 'doughnut',
@@ -214,5 +223,56 @@
         }
     }
 });
+
+const ctx3 = document.getElementById('especialidadesChart').getContext('2d');
+new Chart(ctx3, {
+    type: 'bar',
+    data: {
+        labels: {{ labels_especialidades|safe }},
+        datasets: [{
+            label: 'Número de consultas',
+            data: {{ data_especialidades|safe }},
+            backgroundColor: [
+                '#4e73df',
+                '#1cc88a',
+                '#36b9cc',
+                '#f6c23e',
+                '#e74a3b'
+            ],
+            borderColor: [
+                '#4e73df',
+                '#1cc88a',
+                '#36b9cc',
+                '#f6c23e',
+                '#e74a3b'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    stepSize: 1
+                }
+            }
+        },
+        plugins: {
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return `Consultas: ${context.raw}`;
+                    }
+                }
+            }
+        }
+    }
+});
+
+document.getElementById('fecha-select').addEventListener('change', function() {
+    this.form.submit();
+  });
 </script>
 {% endblock %}

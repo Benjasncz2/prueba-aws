@@ -1,42 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    {% load static %}
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Iniciar Sesión - Hospital</title>
 </head>
-
 <body>
-    <div class="container">
-        <!-- Imagen a la izquierda -->
-        <div class="left-side">
-            <img src="{% static 'images/login_image.png' %}" alt="Logo">
+    <div class="login-container">
+        <div class="logo">
+            <img src="{% static 'images/logo_hospital.png' %}" alt="Logo Hospital">
         </div>
-
-        <!-- Formulario de login a la derecha -->
-        <div class="right-side">
-            <form class="login-form" action="/panel" method="get">
-                <h2>Iniciar sesión</h2>
-
-                <!-- Etiqueta y campo de usuario -->
+        
+        <h1>Iniciar Sesión</h1>
+        
+        <form method="get" action="/panel">
+            {% csrf_token %}
+            
+            <div class="form-group">
                 <label for="username">Usuario</label>
-                <input type="text" id="username" name="username" placeholder="Usuario" required>
-
-                <!-- Etiqueta y campo de contraseña -->
+                <input type="text" id="username" name="username" placeholder="Ingrese su usuario" required>
+            </div>
+            
+            <div class="form-group">
                 <label for="password">Contraseña</label>
-                <input type="password" id="password" name="password" placeholder="Contraseña" required>
-
-                <!-- Botón -->
-                <button type="submit">Ingresar</button>
-
-                <!-- Enlace para olvidar la contraseña -->
-                <div class="forgot-password">
-                    <a href="#">¿Olvidó su contraseña?</a>
-                </div>
-            </form>
-        </div>
+                <input type="password" id="password" name="password" placeholder="Ingrese su contraseña" required>
+            </div>
+            
+            <button type="submit" class="btn-login">Iniciar Sesión</button>
+            
+            <div class="forgot-password">
+                <a href="#">¿Olvidó su contraseña?</a>
+            </div>
+        </form>
     </div>
 </body>
 </html>

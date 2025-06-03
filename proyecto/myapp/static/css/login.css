@@ -1,105 +1,124 @@
-/* Estilo general de la página */
 body {
     margin: 0;
     padding: 0;
-    display: flex;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 400;
+    background: url('../images/hospital_fondo.jpg') no-repeat center center fixed;
+    background-size: cover;
     height: 100vh;
-    font-family: Arial, sans-serif;
-}
-
-/* Contenedor principal */
-.container {
-    display: flex;
-    width: 100%;
-}
-
-/* Estilo para la imagen */
-.left-side {
-    width: 50%;
-    height: 100vh;  /* Asegura que la imagen ocupe toda la altura */
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
-.left-side img {
-    width: 100%;  /* Hace que la imagen ocupe todo el espacio disponible */
-    height: 100%;  /* Asegura que la imagen ocupe toda la altura */
-    object-fit: cover;  /* Mantiene la proporción y cubre el área */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #048a8584; /* Filtro azul-verdoso */
+    z-index: -1;
 }
 
-/* Estilo para el formulario de login */
-.right-side {
-    width: 50%;
-    height: 100vh;  /* Asegura que el formulario ocupe toda la altura */
+.login-container {
+    background: white;
     padding: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #f0f0f0;
-}
-
-/* Estilo del formulario */
-.login-form {
+    border-radius: 10px;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
     width: 100%;
-    max-width: 400px; /* Puedes ajustar este valor para cambiar el ancho */
-    background-color: white;
-    padding: 50px; /* Cambié el padding para que se vea más espacioso */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    max-width: 400px;
+    margin: 20px;
 }
 
-.login-form h2 {
+.logo {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
-/* Estilos para las etiquetas */
-.login-form label {
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333;
+.logo img {
+    max-width: 180px;
+    height: auto;
 }
 
-/* Estilos para los campos de entrada */
-.login-form input {
+h1 {
+    text-align: center;
+    color: #000000;
+    margin-bottom: 30px;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 700;
+    font-size: 15px;
+}
+
+input[type="text"],
+input[type="password"] {
     width: 100%;
-    padding: 12px;
-    margin: 20px 0;  /* Aumenté el margen para más espacio entre los campos */
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    transition: border 0.3s;
 }
 
-/* Estilo del botón */
-.login-form button {
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #05b5af;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(5, 181, 175, 0.2);
+}
+
+.btn-login {
     width: 100%;
-    padding: 12px;
-    background-color: black;
+    padding: 14px;
+    background-color: #05b5af;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 700;
     cursor: pointer;
+    transition: all 0.3s;
+    font-family: 'Lato', sans-serif;
+    letter-spacing: 0.5px;
+    margin-top: 10px;
 }
 
-.login-form button:hover {
-    background-color: #333;  /* Sombra de color más oscuro al pasar el cursor */
+.btn-login:hover {
+    background-color: #048a85;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo para el enlace de "Olvidó su contraseña?" */
-.login-form .forgot-password {
-    margin-top: 15px;
+.forgot-password {
     text-align: left;
+    margin-top: 25px;
 }
 
-.login-form .forgot-password a {
-    text-decoration: underline;  /* Subraya el texto */
-    color: #007BFF;  /* Color del enlace */
+.forgot-password a {
+    color: #05b5af;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.3s;
 }
 
-.login-form .forgot-password a:hover {
-    color: #0056b3;  /* Cambia el color cuando el enlace está en hover */
+.forgot-password a:hover {
+    color: #048a85;
+    text-decoration: underline;
 }
-

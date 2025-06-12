@@ -5,6 +5,10 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body {
+    padding-bottom: 60px; /* Asegura que el contenido no quede detrás del footer */
+}
+
 /* Sidebar :3 */
 .sidebar{
     position: fixed;
@@ -149,7 +153,6 @@
     transition: opacity 0.3s ease;
 }
 
-
 .sidebar ul li:hover .tooltip {
     opacity: 0;
 }
@@ -158,18 +161,18 @@
     display: none;
 }
 
-/* HEADER CON DESGRACIAO TO PRO */
+/* HEADER */
 .main-header {
     position: relative;
     top: 0;
     left: 80px;
     height: auto; 
     width: calc(100% - 80px);
-    background: linear-gradient(to right, #ffffff, #05b5af);
+    background: linear-gradient(to right, #05b5af, #ffffff);
     display: flex;
     flex-wrap: wrap; 
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end; /* Alinea el logo a la derecha */
     padding: 0.5rem 1rem;
     transition: all 0.3s ease;
     z-index: 999;
@@ -180,94 +183,31 @@
     width: calc(100% - 250px);
 }
 
-
-/* La navbar*/
-.header-content {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex: 1;
-    flex-wrap: wrap;
-    gap: 1rem;
-}
-
 .hospital-logo {
     height: 40px;
     max-width: 100%;
-    margin-right: auto; 
 }
 
-.inicio-btn {
-    background-color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-    font-weight: bold;
-    color: #333;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.inicio-btn:hover {
-    background-color: #f0f0f0;
-}
-
-
-/*LAS VOLAS DEL FOOTER */
-.main_footer{
+/* FOOTER ESTILOS */
+.main-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    background-color: #21005D;
-    color: white;
+    background-color: #ffffff;
+    color: #21005D;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
 }
 
-.main_footer .grupo1{
-    width: 100%;
-    max-width: 1200px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 40px;
-    padding: 45px 15px;
-}
-
-.main_footer .grupo1 .footer-item{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-}
-
-.main_footer .grupo1 .footer-item figure{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    margin-bottom: 25px;
-}
-
-.main_footer .grupo1 .footer-item figure img{
-    max-width: 150px;
-    height: auto;
-}
-
-.main_footer .grupo1 .footer-item h2{
-    color: white;
-    margin-bottom: 25px;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.main_footer .grupo1 .footer-item p{
-    color: white;
-    margin-bottom: 15px;
-}
-
-.main_footer .grupo2{
-    background-color: #170042;
+.main-footer .grupo2 {
+    background-color: #ffffff;
+    color: #05b5af;
     padding: 15px 10px;
     text-align: center;
+    font-weight: bold;
 }
 
-.main_footer .grupo2 small{
-    font-size: 14px;
+.main-footer .grupo2 small {
+    font-size: 14px;
 }

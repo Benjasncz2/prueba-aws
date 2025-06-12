@@ -27,6 +27,13 @@
         </div>
         <ul>
             <li>
+                <a href="#" onclick="window.location.href='/panel'">
+                    <i class="bx bxs-home"></i>
+                    <span class="nav-item">Panel</span>
+                </a>
+                <span class="tooltip">Panel</span>
+            </li>
+            <li>
                 <a href="#" onclick="window.location.href='/agenda'">
                     <i class="bx bxs-book-content"></i>
                     <span class="nav-item">Agenda</span>
@@ -66,7 +73,6 @@
 
     <header class="main-header">
         <div class="header-content">
-            <button class="inicio-btn" onclick="window.location.href='/panel'">Inicio</button>
             <div class="logo-box">
                 <img src="{% static 'images/logo_hospital.png' %}" alt="Logo Hospital" class="hospital-logo">
             </div>
@@ -75,32 +81,9 @@
 
     {% block content %}{% endblock %}
 
-    <footer>
-        <div class="main_footer">
-            <div class="grupo1">
-                <div class="footer-item">
-                    <figure>
-                        <a href="#">
-                            <img src="{% static 'images/logo_vesperdevs_fondoazul.png' %}" alt="Logo Vesperdevs">
-                        </a>
-                    </figure>
-                </div>
-                <div class="footer-item">
-                    <h2>SOBRE NOSOTROS</h2>
-                    <p>En VesperDevs, somos un equipo de desarrolladores dedicados a crear soluciones innovadoras.</p>
-                </div>
-                <div class="footer-item">
-                    <h2>CONTÁCTANOS</h2>
-                    <p class="correos">
-                        be.sanchezt@udd.cl<br>
-                        a.pintos@udd.cl<br>
-                        b.pintof@udd.cl
-                    </p>
-                </div>
-            </div>
-            <div class="grupo2">
-                <small>&copy; 2025 <b>VesperDevs</b> - Todos los Derechos Reservados.</small>
-            </div>
+    <footer class="main-footer">
+        <div class="grupo2">
+            <small>&copy; 2025 <b>VesperDevs</b> - Todos los Derechos Reservados.</small>
         </div>
     </footer>
 </body>
@@ -111,7 +94,6 @@
     btn.onclick = function (){
         sidebar.classList.toggle('active');
     };
-
 </script>
 
 {% block extra_js %}{% endblock %}
